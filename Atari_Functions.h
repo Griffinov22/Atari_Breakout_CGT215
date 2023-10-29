@@ -11,7 +11,7 @@ using namespace sfp;
 
 void shout();
 
-void loadImage(Texture &tex, string path);
+void loadTex(Texture &tex, string path);
 
 void displayStaticRectangles(vector<PhysicsRectangle> sprites, RenderWindow &window);
 

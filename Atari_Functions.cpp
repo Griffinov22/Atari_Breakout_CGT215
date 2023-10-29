@@ -13,7 +13,7 @@ void shout() {
 	cout << "HELLO WORLD" << endl;
 }
 
-void loadImage(Texture &tex, string path) {
+void loadTex(Texture &tex, string path) {
 	if (!tex.loadFromFile(path)) {
 		cout << "Could not load " << path;
 		exit(1);
