@@ -12,7 +12,7 @@ using namespace sfp;
 
 
 //options
-const int pixelConstant(3);
+const float pixelConstant(0.5);
 const Color wallColor(255, 255, 255);
 const Color paddleColor(2, 89, 252);
 
@@ -45,6 +45,13 @@ int main()
     paddle.setSize(Vector2f(50, 25));
     paddle.setCenter(Vector2f(300, 725));
     paddle.setFillColor(paddleColor);
+    paddle.setOutlineThickness(1);
+    paddle.setOutlineColor(Color(255, 255, 255));
+    paddle.onCollision = [&paddle](PhysicsBodyCollisionResult res) {
+        //Vector2f currPos(paddle.getCenter());
+        //if (currPos.x <= 10)
+
+        };
     world.AddPhysicsBody(paddle);
     //side bars
     PhysicsRectangle rightBar;
@@ -61,23 +68,24 @@ int main()
 
 
 
-    vector<PhysicsRectangle> rects = vector<PhysicsRectangle> { leftWall, rightWall, ceiling, paddle, rightBar, leftBar };
+    vector<PhysicsRectangle> rects = vector<PhysicsRectangle> { leftWall, rightWall, ceiling, rightBar, leftBar };
     Clock clock;
     Time lastTime(clock.getElapsedTime());
 
     while (true) {
         Time currentTime(clock.getElapsedTime());
-        int ellapsedMS((lastTime - currentTime).asMilliseconds());
+        int ellapsedMS((currentTime - lastTime).asMilliseconds());
 
-        if (ellapsedMS > 3) {
-            world.UpdatePhysics(ellapsedMS);
+        if (ellapsedMS > 2) {
             lastTime = currentTime;
+            world.UpdatePhysics(ellapsedMS);
+            movePaddle(paddle, ellapsedMS, pixelConstant);
+            
+            window.clear();
+            window.draw(paddle);
+            displayStaticRectangles(rects, window);
+            window.display();
         }
-
-        window.clear();
-        displayStaticRectangles(rects, window);
-
-        window.display();
 
     }
 }

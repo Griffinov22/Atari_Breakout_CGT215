@@ -26,10 +26,25 @@ void displayStaticRectangles(vector<PhysicsRectangle> sprites, RenderWindow &win
 	}
 }
 
-void getUserInput(PhysicsRectangle paddle, int ellapsedMS, int pixelConstant) {
-	if (Keyboard::isKeyPressed(Keyboard::Right)) {
-		Vector2f oldCenter(paddle.getCenter());
-		paddle.setCenter(oldCenter.x + (ellapsedMS + pixelConstant), oldCenter.y);
-	}
+void movePaddle(PhysicsRectangle &paddle, int ellapsedMS, float pixelConstant) {
+	
+	Vector2f currPos(paddle.getCenter());
 
-}d
+	if (currPos.x < 37.5) {
+		paddle.setCenter(Vector2f(37.5, currPos.y));
+	} else if (currPos.x > 562.5) {
+		paddle.setCenter(Vector2f(562.5, currPos.y));
+	}
+	else {
+		if (Keyboard::isKeyPressed(Keyboard::Right)) {
+			Vector2f paddleLoc(paddle.getCenter());
+			paddleLoc.x = paddleLoc.x + (ellapsedMS * pixelConstant);
+			paddle.setCenter(paddleLoc);
+		}
+		if (Keyboard::isKeyPressed(Keyboard::Left)) {
+			Vector2f paddleLoc(paddle.getCenter());
+			paddleLoc.x = paddleLoc.x - (ellapsedMS * pixelConstant);
+			paddle.setCenter(paddleLoc);
+		}
+	}
+}
