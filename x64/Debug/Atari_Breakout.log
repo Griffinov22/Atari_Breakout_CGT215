@@ -2,8 +2,6 @@
 C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.37.32822\include\any(13): warning STL4038: The contents of <any> are available only with C++17 or later.
 C:\Users\griff\OneDrive\Purdue2023\CGT 215\final_project\Atari_Breakout\packages\SFPhysics.2.2.6\build\native\include\SFPhysics\BoundsCollisionResult.h(9,2): warning C4099: 'sfp::BoundsCollisionResult': type name first seen using 'class' now seen using 'struct'
 C:\Users\griff\OneDrive\Purdue2023\CGT 215\final_project\Atari_Breakout\packages\SFPhysics.2.2.6\build\native\include\SFPhysics\BoundsCollisionResult.h(8,9): message : see declaration of 'sfp::BoundsCollisionResult'
-C:\Users\griff\OneDrive\Purdue2023\CGT 215\final_project\Atari_Breakout\Atari_Functions.cpp(75,14): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-C:\Users\griff\OneDrive\Purdue2023\CGT 215\final_project\Atari_Breakout\Atari_Functions.cpp(79,18): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
 C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.37.32822\include\type_traits(1762,67): warning C4244: 'argument': conversion from '_Ty' to 'unsigned int', possible loss of data
           with
           [

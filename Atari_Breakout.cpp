@@ -149,7 +149,7 @@ int main()
 
             if (!hasSeenStartingScreen) {
                 showStartingScreen(window, gameFont);
-                hasSeenStartingScreen = false;
+                hasSeenStartingScreen = true;
             }
             window.display(); //DISPLAYING CHANGES
         }

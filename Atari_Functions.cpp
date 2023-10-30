@@ -72,11 +72,14 @@ void showStartingScreen(RenderWindow& window, Font font) {
 
 
 	Clock clock;
-	int lastTime(clock.getElapsedTime().asSeconds());
+	int lastTime(0);
+	int currentTime(0);
 	bool hasClickedSpace(false);
 
 	while (true) {
-		int currentTime(clock.getElapsedTime().asSeconds());
+		if (hasClickedSpace) {
+			currentTime = clock.getElapsedTime().asMilliseconds();
+		}
 		int ellapsedSeconds(currentTime - lastTime);
 
 		window.clear();
@@ -92,7 +95,7 @@ void showStartingScreen(RenderWindow& window, Font font) {
 			hasClickedSpace = true;
 		}
 
-		if (ellapsedSeconds >= 1) {
+		if (ellapsedSeconds >= 1000) {
 			countDown--;
 			lastTime = currentTime;
 			if (countDown == 0) {
