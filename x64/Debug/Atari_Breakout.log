@@ -4,7 +4,6 @@ C:\Users\griff\OneDrive\Purdue2023\CGT 215\final_project\Atari_Breakout\packages
 C:\Users\griff\OneDrive\Purdue2023\CGT 215\final_project\Atari_Breakout\packages\SFPhysics.2.2.6\build\native\include\SFPhysics\BoundsCollisionResult.h(8,9): message : see declaration of 'sfp::BoundsCollisionResult'
 C:\Users\griff\OneDrive\Purdue2023\CGT 215\final_project\Atari_Breakout\Atari_Functions.cpp(75,14): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
 C:\Users\griff\OneDrive\Purdue2023\CGT 215\final_project\Atari_Breakout\Atari_Functions.cpp(79,18): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-C:\Users\griff\OneDrive\Purdue2023\CGT 215\final_project\Atari_Breakout\Atari_Functions.cpp(82,50): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
 C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.37.32822\include\type_traits(1762,67): warning C4244: 'argument': conversion from '_Ty' to 'unsigned int', possible loss of data
           with
           [
@@ -40,12 +39,12 @@ C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.37.3282
           [
               _Fx=sfp::PhysicsShapeT<sfp::CenteredRectangle,sfp::AABB>::{ctor}::<lambda_3>
           ]
-C:\Users\griff\OneDrive\Desktop\Atari_Breakout_CGT215\packages\SFPhysics.2.2.6\build\native\include\SFPhysics\PhysicsShapeT.h(53,39): message : see reference to function template instantiation 'std::function<void (float)> &std::function<void (float)>::operator =<sfp::PhysicsShapeT<sfp::CenteredRectangle,sfp::AABB>::{ctor}::<lambda_3>,0>(_Fx &&)' being compiled
+C:\Users\griff\OneDrive\Purdue2023\CGT 215\final_project\Atari_Breakout\packages\SFPhysics.2.2.6\build\native\include\SFPhysics\PhysicsShapeT.h(53,39): message : see reference to function template instantiation 'std::function<void (float)> &std::function<void (float)>::operator =<sfp::PhysicsShapeT<sfp::CenteredRectangle,sfp::AABB>::{ctor}::<lambda_3>,0>(_Fx &&)' being compiled
           with
           [
               _Fx=sfp::PhysicsShapeT<sfp::CenteredRectangle,sfp::AABB>::{ctor}::<lambda_3>
           ]
-C:\Users\griff\OneDrive\Desktop\Atari_Breakout_CGT215\packages\SFPhysics.2.2.6\build\native\include\SFPhysics\PhysicsShapeT.h(44,2): message : while compiling class template member function 'sfp::PhysicsShapeT<sfp::CenteredRectangle,sfp::AABB>::PhysicsShapeT(void)'
-C:\Users\griff\OneDrive\Desktop\Atari_Breakout_CGT215\packages\SFPhysics.2.2.6\build\native\include\SFPhysics\PhysicsRectangle.h(8,6): message : see the first reference to 'sfp::PhysicsShapeT<sfp::CenteredRectangle,sfp::AABB>::PhysicsShapeT' in 'sfp::PhysicsRectangle::PhysicsRectangle'
-C:\Users\griff\OneDrive\Desktop\Atari_Breakout_CGT215\packages\SFPhysics.2.2.6\build\native\include\SFPhysics\PhysicsRectangle.h(7,37): message : see reference to class template instantiation 'sfp::PhysicsShapeT<sfp::CenteredRectangle,sfp::AABB>' being compiled
-  Atari_Breakout.vcxproj -> C:\Users\griff\OneDrive\Desktop\Atari_Breakout_CGT215\x64\Debug\Atari_Breakout.exe
+C:\Users\griff\OneDrive\Purdue2023\CGT 215\final_project\Atari_Breakout\packages\SFPhysics.2.2.6\build\native\include\SFPhysics\PhysicsShapeT.h(44,2): message : while compiling class template member function 'sfp::PhysicsShapeT<sfp::CenteredRectangle,sfp::AABB>::PhysicsShapeT(void)'
+C:\Users\griff\OneDrive\Purdue2023\CGT 215\final_project\Atari_Breakout\packages\SFPhysics.2.2.6\build\native\include\SFPhysics\PhysicsRectangle.h(8,6): message : see the first reference to 'sfp::PhysicsShapeT<sfp::CenteredRectangle,sfp::AABB>::PhysicsShapeT' in 'sfp::PhysicsRectangle::PhysicsRectangle'
+C:\Users\griff\OneDrive\Purdue2023\CGT 215\final_project\Atari_Breakout\packages\SFPhysics.2.2.6\build\native\include\SFPhysics\PhysicsRectangle.h(7,37): message : see reference to class template instantiation 'sfp::PhysicsShapeT<sfp::CenteredRectangle,sfp::AABB>' being compiled
+  Atari_Breakout.vcxproj -> C:\Users\griff\OneDrive\Purdue2023\CGT 215\final_project\Atari_Breakout\x64\Debug\Atari_Breakout.exe

@@ -78,28 +78,27 @@ void showStartingScreen(RenderWindow& window, Font font) {
 	while (true) {
 		int currentTime(clock.getElapsedTime().asSeconds());
 		int ellapsedSeconds(currentTime - lastTime);
-		while (ellapsedSeconds <= 1) {
-			currentTime = clock.getElapsedTime().asSeconds();
-			ellapsedSeconds = currentTime - lastTime;
 
-			window.clear();
-			window.draw(backboard);
-			window.draw(welcomeText);
-			countDownText.setString(to_string(countDown));
-			if (hasClickedSpace) {
-				window.draw(countDownText);
-			}
-			window.display();
-			if (!hasClickedSpace) {
-				while (!Keyboard::isKeyPressed(Keyboard::Space));
-				hasClickedSpace = true;
-			}
+		window.clear();
+		window.draw(backboard);
+		window.draw(welcomeText);
+		countDownText.setString(to_string(countDown));
+		if (hasClickedSpace) {
+			window.draw(countDownText);
 		}
-		countDown--;
-		lastTime = currentTime;
-		if (countDown == 0) {
-			window.clear();
-			break;
+		window.display();
+		if (!hasClickedSpace) {
+			while (!Keyboard::isKeyPressed(Keyboard::Space));
+			hasClickedSpace = true;
+		}
+
+		if (ellapsedSeconds >= 1) {
+			countDown--;
+			lastTime = currentTime;
+			if (countDown == 0) {
+				window.clear();
+				break;
+			}
 		}
 	}
 }
