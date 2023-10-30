@@ -18,3 +18,9 @@ void displayStaticRectangles(vector<PhysicsRectangle> sprites, RenderWindow &win
 void movePaddle(PhysicsRectangle &paddle, int ellapsedMS, float pixelConstant);
 
 void showStartingScreen(RenderWindow& window, Font font);
+
+/// <summary>
+/// Seconds to freeze program. Equal to JavaScript .setTimeOut(()=>{...},duration);
+/// </summary>
+/// <param name="duration"></param>
+void wait(int duration);

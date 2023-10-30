@@ -134,7 +134,6 @@ int main()
             
 
             window.clear();
-            //draw elements
             window.draw(paddle);
             displayStaticRectangles(rects, window);
             for (PhysicsRectangle brick : bricks) {

@@ -49,6 +49,19 @@ void movePaddle(PhysicsRectangle &paddle, int ellapsedMS, float pixelConstant) {
 	}
 }
 
+
+void wait(int duration) {
+	Clock clock;
+	Time lastTime(clock.getElapsedTime());
+	while (true) {
+		Time currentTime(clock.getElapsedTime());
+		int ellapsedMS((currentTime - lastTime).asMilliseconds());
+		if (ellapsedMS >= duration * 1000) {
+			break;
+		}
+	}
+}
+
 void showStartingScreen(RenderWindow& window, Font font) {
 	PhysicsRectangle backboard;
 	backboard.setSize(Vector2f(400, 200));
@@ -77,29 +90,29 @@ void showStartingScreen(RenderWindow& window, Font font) {
 	bool hasClickedSpace(false);
 
 	while (true) {
-		if (hasClickedSpace) {
-			currentTime = clock.getElapsedTime().asMilliseconds();
-		}
 		int ellapsedSeconds(currentTime - lastTime);
-
 		window.clear();
 		window.draw(backboard);
 		window.draw(welcomeText);
-		countDownText.setString(to_string(countDown));
+
 		if (hasClickedSpace) {
+			currentTime = clock.getElapsedTime().asMilliseconds();
+			countDownText.setString(to_string(countDown));
 			window.draw(countDownText);
 		}
 		window.display();
+		
 		if (!hasClickedSpace) {
 			while (!Keyboard::isKeyPressed(Keyboard::Space));
 			hasClickedSpace = true;
+			clock.restart(); //allows currentTime to be accurate
 		}
+
 
 		if (ellapsedSeconds >= 1000) {
 			countDown--;
 			lastTime = currentTime;
 			if (countDown == 0) {
-				window.clear();
 				break;
 			}
 		}
