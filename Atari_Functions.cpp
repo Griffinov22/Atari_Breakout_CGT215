@@ -13,7 +13,7 @@ void shout() {
 	cout << "HELLO WORLD" << endl;
 }
 
-void loadImage(Texture &tex, string path) {
+void loadTex(Texture &tex, string path) {
 	if (!tex.loadFromFile(path)) {
 		cout << "Could not load " << path;
 		exit(1);
@@ -26,10 +26,80 @@ void displayStaticRectangles(vector<PhysicsRectangle> sprites, RenderWindow &win
 	}
 }
 
-void getUserInput(PhysicsRectangle paddle, int ellapsedMS, int pixelConstant) {
-	if (Keyboard::isKeyPressed(Keyboard::Right)) {
-		Vector2f oldCenter(paddle.getCenter());
-		paddle.setCenter(oldCenter.x + (ellapsedMS + pixelConstant), oldCenter.y);
-	}
+void movePaddle(PhysicsRectangle &paddle, int ellapsedMS, float pixelConstant) {
+	
+	Vector2f currPos(paddle.getCenter());
 
-}d
+	if (currPos.x < 37.5) {
+		paddle.setCenter(Vector2f(37.5, currPos.y));
+	} else if (currPos.x > 562.5) {
+		paddle.setCenter(Vector2f(562.5, currPos.y));
+	}
+	else {
+		if (Keyboard::isKeyPressed(Keyboard::Right)) {
+			Vector2f paddleLoc(paddle.getCenter());
+			paddleLoc.x = paddleLoc.x + (ellapsedMS * pixelConstant);
+			paddle.setCenter(paddleLoc);
+		}
+		if (Keyboard::isKeyPressed(Keyboard::Left)) {
+			Vector2f paddleLoc(paddle.getCenter());
+			paddleLoc.x = paddleLoc.x - (ellapsedMS * pixelConstant);
+			paddle.setCenter(paddleLoc);
+		}
+	}
+}
+
+void showStartingScreen(RenderWindow& window, Font font) {
+	PhysicsRectangle backboard;
+	backboard.setSize(Vector2f(400, 200));
+	backboard.setCenter(Vector2f(300, 400));
+	backboard.setFillColor(Color(250, 200, 60));
+	backboard.setStatic(true);
+
+	Text welcomeText;
+	welcomeText.setFont(font);
+	welcomeText.setCharacterSize(20);
+	welcomeText.setString("Welcome to Breakout.\nPress space\nto start.");
+	FloatRect welSz(welcomeText.getGlobalBounds());
+	welcomeText.setPosition(300 - (welSz.width / 2), 340 - (welSz.height / 2));
+
+	Text countDownText;
+	int countDown(3);
+	countDownText.setFont(font);
+	countDownText.setString(to_string(countDown));
+	FloatRect cdtSz(countDownText.getGlobalBounds());
+	countDownText.setPosition(300 - (cdtSz.width / 2), 420 - (cdtSz.height / 2));
+
+
+	Clock clock;
+	int lastTime(clock.getElapsedTime().asSeconds());
+	bool hasClickedSpace(false);
+
+	while (true) {
+		int currentTime(clock.getElapsedTime().asSeconds());
+		int ellapsedSeconds(currentTime - lastTime);
+		while (ellapsedSeconds <= 1) {
+			currentTime = clock.getElapsedTime().asSeconds();
+			ellapsedSeconds = currentTime - lastTime;
+
+			window.clear();
+			window.draw(backboard);
+			window.draw(welcomeText);
+			countDownText.setString(to_string(countDown));
+			if (hasClickedSpace) {
+				window.draw(countDownText);
+			}
+			window.display();
+			if (!hasClickedSpace) {
+				while (!Keyboard::isKeyPressed(Keyboard::Space));
+				hasClickedSpace = true;
+			}
+		}
+		countDown--;
+		lastTime = currentTime;
+		if (countDown == 0) {
+			window.clear();
+			break;
+		}
+	}
+}

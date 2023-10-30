@@ -11,8 +11,10 @@ using namespace sfp;
 
 void shout();
 
-void loadImage(Texture &tex, string path);
+void loadTex(Texture &tex, string path);
 
 void displayStaticRectangles(vector<PhysicsRectangle> sprites, RenderWindow &window);
 
-void getUserInput(PhysicsRectangle paddle, int ellapsedMS, int pixelConstant);
+void movePaddle(PhysicsRectangle &paddle, int ellapsedMS, float pixelConstant);
+
+void showStartingScreen(RenderWindow& window, Font font);
