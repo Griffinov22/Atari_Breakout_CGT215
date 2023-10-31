@@ -78,8 +78,6 @@ int main()
     //ball
     PhysicsRectangle ball;
     ball.setSize(Vector2f(10, 10));
-    ball.setCenter(Vector2f(300, 420));
-    world.AddPhysicsBody(ball);
     ball.onCollision = [](PhysicsBodyCollisionResult res) {
         cout << "collision" << endl;
     };
@@ -146,8 +144,8 @@ int main()
         int ellapsedMS((currentTime - lastTime).asMilliseconds());
 
         if (ellapsedMS > 3) {
-            world.UpdatePhysics(ellapsedMS);
             lastTime = currentTime;
+            world.UpdatePhysics(ellapsedMS);
             movePaddle(paddle, ellapsedMS, pixelConstant);
             
 
@@ -157,7 +155,7 @@ int main()
             }
             window.draw(paddle);
             displayStaticRectangles(rects, window);
-            for (PhysicsRectangle brick : bricks) {
+            for (PhysicsRectangle &brick : bricks) {
                 window.draw(brick);
             }
             FloatRect sts(scoreText.getGlobalBounds());
@@ -171,10 +169,12 @@ int main()
                 showStartingScreen(window, gameFont);
                 hasSeenStartingScreen = true;
                 isPlaying = true;
-                ball.setVelocity(Vector2f(0, 0.25)); //not working!
-                window.draw(ball);
+                ball.setCenter(Vector2f(300, 420));
+                ball.setVelocity(Vector2f(0.2, 1));
+                world.AddPhysicsBody(ball); // not working!
                 
             }
+            world.VisualizeAllBounds(window);
             window.display(); //DISPLAYING CHANGES
         }
 
