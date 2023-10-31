@@ -49,12 +49,19 @@ int main()
     ceiling.setCenter(Vector2f(300, 50));
     ceiling.setStatic(true);
     world.AddPhysicsBody(ceiling);
+    //floor
+    PhysicsRectangle floor;
+    floor.setSize(Vector2f(600, 50));
+    floor.setCenter(Vector2f(300, 850));
+    floor.setStatic(true);
+    world.AddPhysicsBody(floor);
 
     //paddle and side bars
     PhysicsRectangle paddle;
     paddle.setSize(Vector2f(50, 15));
     paddle.setCenter(Vector2f(300, 725));
     paddle.setFillColor(paddleColor);
+    paddle.setStatic(true);
     world.AddPhysicsBody(paddle);
     //side bars
     PhysicsRectangle rightBar;
@@ -68,6 +75,14 @@ int main()
     leftBar.setFillColor(paddleColor);
     world.AddPhysicsBody(leftBar);
 
+    //ball
+    PhysicsRectangle ball;
+    ball.setSize(Vector2f(10, 10));
+    ball.setCenter(Vector2f(300, 420));
+    world.AddPhysicsBody(ball);
+    ball.onCollision = [](PhysicsBodyCollisionResult res) {
+        cout << "collision" << endl;
+    };
 
     PhysicsShapeList<PhysicsRectangle> bricks;
     //12 bricks here
@@ -101,6 +116,8 @@ int main()
             newBrick.setSize(Vector2f(42.9167, 20));
             newBrick.setFillColor(brickColor);
             newBrick.setCenter(Vector2f((15 + (42.9167 / 2)) + (i * 42.9167) + (i * starterX), starterY));
+            world.AddPhysicsBody(newBrick);
+            newBrick.setStatic(true);
         }
     }
     
@@ -118,22 +135,26 @@ int main()
     scoreText.setString(to_string(score));
 
 
+    vector<PhysicsRectangle> rects = vector<PhysicsRectangle> { leftWall, rightWall, ceiling, rightBar, leftBar, floor };
 
-    vector<PhysicsRectangle> rects = vector<PhysicsRectangle> { leftWall, rightWall, ceiling, rightBar, leftBar };
     Clock clock;
     Time lastTime(clock.getElapsedTime());
+    bool isPlaying(false);
 
     while (true) {
         Time currentTime(clock.getElapsedTime());
         int ellapsedMS((currentTime - lastTime).asMilliseconds());
 
-        if (ellapsedMS > 2) {
-            lastTime = currentTime;
+        if (ellapsedMS > 3) {
             world.UpdatePhysics(ellapsedMS);
+            lastTime = currentTime;
             movePaddle(paddle, ellapsedMS, pixelConstant);
             
 
             window.clear();
+            if (isPlaying) {
+                window.draw(ball);
+            }
             window.draw(paddle);
             displayStaticRectangles(rects, window);
             for (PhysicsRectangle brick : bricks) {
@@ -149,6 +170,10 @@ int main()
             if (!hasSeenStartingScreen) {
                 showStartingScreen(window, gameFont);
                 hasSeenStartingScreen = true;
+                isPlaying = true;
+                ball.setVelocity(Vector2f(0, 0.25)); //not working!
+                window.draw(ball);
+                
             }
             window.display(); //DISPLAYING CHANGES
         }
