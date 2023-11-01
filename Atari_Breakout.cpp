@@ -196,11 +196,6 @@ int main()
 
             if (isPlaying) {
                 window.draw(ball);
-            } else if (!isPlaying && hasSeenStartingScreen) {
-                wait(1);
-                clock.restart();
-                lastTime = lastTime.Zero;
-                dropBallIn(ball, world, isPlaying);
             }
 
             if (!hasSeenStartingScreen) {
@@ -212,7 +207,14 @@ int main()
             }
 
             window.display(); //DISPLAYING CHANGES
+
             bricks.DoRemovals();
+            if (!isPlaying && hasSeenStartingScreen && (lives > 0)) {
+                wait(1);
+                clock.restart();
+                lastTime = lastTime.Zero;
+                dropBallIn(ball, world, isPlaying);
+            }
         }
 
     }

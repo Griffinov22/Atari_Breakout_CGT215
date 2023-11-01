@@ -1,13 +1,28 @@
-﻿  Atari_Functions.cpp
+﻿  Atari_Breakout.cpp
 C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.37.32822\include\any(13): warning STL4038: The contents of <any> are available only with C++17 or later.
 C:\Users\griff\OneDrive\Purdue2023\CGT 215\final_project\Atari_Breakout\packages\SFPhysics.2.2.6\build\native\include\SFPhysics\BoundsCollisionResult.h(9,2): warning C4099: 'sfp::BoundsCollisionResult': type name first seen using 'class' now seen using 'struct'
 C:\Users\griff\OneDrive\Purdue2023\CGT 215\final_project\Atari_Breakout\packages\SFPhysics.2.2.6\build\native\include\SFPhysics\BoundsCollisionResult.h(8,9): message : see declaration of 'sfp::BoundsCollisionResult'
-C:\Users\griff\OneDrive\Purdue2023\CGT 215\final_project\Atari_Breakout\Atari_Functions.cpp(66,33): warning C4305: 'argument': truncation from 'double' to 'T'
+C:\Users\griff\OneDrive\Purdue2023\CGT 215\final_project\Atari_Breakout\Atari_Breakout.cpp(89,45): warning C4305: 'argument': truncation from 'double' to 'T'
           with
           [
               T=float
           ]
-C:\Users\griff\OneDrive\Purdue2023\CGT 215\final_project\Atari_Breakout\Atari_Functions.cpp(66,28): warning C4305: 'argument': truncation from 'double' to 'T'
+C:\Users\griff\OneDrive\Purdue2023\CGT 215\final_project\Atari_Breakout\Atari_Breakout.cpp(92,44): warning C4305: 'argument': truncation from 'double' to 'T'
+          with
+          [
+              T=float
+          ]
+C:\Users\griff\OneDrive\Purdue2023\CGT 215\final_project\Atari_Breakout\Atari_Breakout.cpp(138,39): warning C4305: 'argument': truncation from 'double' to 'T'
+          with
+          [
+              T=float
+          ]
+C:\Users\griff\OneDrive\Purdue2023\CGT 215\final_project\Atari_Breakout\Atari_Breakout.cpp(140,96): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\griff\OneDrive\Purdue2023\CGT 215\final_project\Atari_Breakout\Atari_Breakout.cpp(140,78): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
           with
           [
               T=float
@@ -47,12 +62,12 @@ C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.37.3282
           [
               _Fx=sfp::PhysicsShapeT<sfp::CenteredRectangle,sfp::AABB>::{ctor}::<lambda_3>
           ]
-C:\Users\griff\OneDrive\Purdue2023\CGT 215\final_project\Atari_Breakout\packages\SFPhysics.2.2.6\build\native\include\SFPhysics\PhysicsShapeT.h(75,39): message : see reference to function template instantiation 'std::function<void (float)> &std::function<void (float)>::operator =<sfp::PhysicsShapeT<sfp::CenteredRectangle,sfp::AABB>::{ctor}::<lambda_3>,0>(_Fx &&)' being compiled
+C:\Users\griff\OneDrive\Purdue2023\CGT 215\final_project\Atari_Breakout\packages\SFPhysics.2.2.6\build\native\include\SFPhysics\PhysicsShapeT.h(53,39): message : see reference to function template instantiation 'std::function<void (float)> &std::function<void (float)>::operator =<sfp::PhysicsShapeT<sfp::CenteredRectangle,sfp::AABB>::{ctor}::<lambda_3>,0>(_Fx &&)' being compiled
           with
           [
               _Fx=sfp::PhysicsShapeT<sfp::CenteredRectangle,sfp::AABB>::{ctor}::<lambda_3>
           ]
-C:\Users\griff\OneDrive\Purdue2023\CGT 215\final_project\Atari_Breakout\packages\SFPhysics.2.2.6\build\native\include\SFPhysics\PhysicsShapeT.h(62,56): message : while compiling class template member function 'sfp::PhysicsShapeT<sfp::CenteredRectangle,sfp::AABB>::PhysicsShapeT(const sfp::PhysicsShapeT<sfp::CenteredRectangle,sfp::AABB> &)'
+C:\Users\griff\OneDrive\Purdue2023\CGT 215\final_project\Atari_Breakout\packages\SFPhysics.2.2.6\build\native\include\SFPhysics\PhysicsShapeT.h(44,2): message : while compiling class template member function 'sfp::PhysicsShapeT<sfp::CenteredRectangle,sfp::AABB>::PhysicsShapeT(void)'
 C:\Users\griff\OneDrive\Purdue2023\CGT 215\final_project\Atari_Breakout\packages\SFPhysics.2.2.6\build\native\include\SFPhysics\PhysicsRectangle.h(8,6): message : see the first reference to 'sfp::PhysicsShapeT<sfp::CenteredRectangle,sfp::AABB>::PhysicsShapeT' in 'sfp::PhysicsRectangle::PhysicsRectangle'
 C:\Users\griff\OneDrive\Purdue2023\CGT 215\final_project\Atari_Breakout\packages\SFPhysics.2.2.6\build\native\include\SFPhysics\PhysicsRectangle.h(7,37): message : see reference to class template instantiation 'sfp::PhysicsShapeT<sfp::CenteredRectangle,sfp::AABB>' being compiled
   Atari_Breakout.vcxproj -> C:\Users\griff\OneDrive\Purdue2023\CGT 215\final_project\Atari_Breakout\x64\Debug\Atari_Breakout.exe
