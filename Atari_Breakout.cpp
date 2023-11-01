@@ -12,7 +12,7 @@ using namespace sfp;
 
 
 //options
-const float pixelConstant(0.5);
+const float pixelConstant(0.45);
 const Color wallColor(255, 255, 255);
 const Color paddleColor(2, 89, 252);
     //brick colors
@@ -31,6 +31,7 @@ int main()
     int score(0);
     bool isPlaying(false);
     bool hasSeenStartingScreen(false);
+    bool hasAppliedBoost(false);
 
     //ball
     PhysicsRectangle ball;
@@ -73,7 +74,7 @@ int main()
 
     //paddle and side bars
     PhysicsRectangle paddle;
-    paddle.setSize(Vector2f(50, 15));
+    paddle.setSize(Vector2f(75, 15));
     paddle.setCenter(Vector2f(300, 725));
     paddle.setFillColor(paddleColor);
     paddle.setStatic(true);
@@ -86,10 +87,10 @@ int main()
             //check if ball collided on left,center,right side of paddle
             //do not apply force if ball hits middle 20% of paddle
             if (ballPos.x < (padSz.left + (padSz.width * 0.4))) {
-                ball.applyImpulse(Vector2f(-0.05,0));
+                ball.applyImpulse(Vector2f(-0.12,0));
             }
             else if (ballPos.x > ((padSz.left + (padSz.width * 0.6)))) {
-                ball.applyImpulse(Vector2f(0.05,0));
+                ball.applyImpulse(Vector2f(0.12,0));
             }
         }
         };
@@ -140,13 +141,32 @@ int main()
             newBrick.setCenter(Vector2f((15 + (42.9167 / 2)) + (i * 42.9167) + (i * starterX), starterY));
             newBrick.setStatic(true);
             world.AddPhysicsBody(newBrick);
-            newBrick.onCollision = [&ball, &window, &world, &newBrick, &bricks, &score](PhysicsBodyCollisionResult res) {
-                if (res.object1 == newBrick && res.object2 == ball) {
+            newBrick.onCollision = [&ball, &window, &world, &newBrick, &bricks, &score, &hasAppliedBoost, j,i](PhysicsBodyCollisionResult res) {
+                Color nbc(newBrick.getFillColor());
+                if (res.object2 == ball) {
                     world.RemovePhysicsBody(newBrick);
                     bricks.QueueRemove(newBrick);
-                    score += 10;
+                    
+                    if (nbc == yellowBrick) {
+                        score += 10;    
+                    }
+                    else if (nbc == greenBrick) {
+                        score += 30;
+                    }
+                    else if (nbc == orangeBrick) {
+                        score += 50;
+                    }
+                    else if (nbc == redBrick) {
+                        score += 70;
+                    }
                 }
-                };
+                if (j == 0 && !hasAppliedBoost) {
+                    //makes ball go faster when contact with upper level of red bricks!
+                    ball.applyImpulse(Vector2f(ball.getVelocity().x * 1.08, ball.getVelocity().y * 1.08)); 
+                    hasAppliedBoost = true;
+                }
+
+            };
         }
     }
     
@@ -201,7 +221,7 @@ int main()
             if (!hasSeenStartingScreen) {
                 showStartingScreen(window, gameFont);
                 hasSeenStartingScreen = true;
-                dropBallIn(ball, world, isPlaying);
+                dropBallIn(ball, world, isPlaying, hasAppliedBoost);
                 clock.restart();
                 
             }
@@ -209,20 +229,22 @@ int main()
             window.display(); //DISPLAYING CHANGES
 
             bricks.DoRemovals();
-            if (!isPlaying && hasSeenStartingScreen && (lives > 0)) {
-                wait(1);
+            if (!isPlaying && hasSeenStartingScreen) {
+                wait(2);
                 clock.restart();
                 lastTime = lastTime.Zero;
-                dropBallIn(ball, world, isPlaying);
+                dropBallIn(ball, world, isPlaying, hasAppliedBoost);
             }
         }
 
     }
+    window.display(); //allows display of lives to be zero
+    showEndingScreen(window, gameFont, score);
+
     while (true) {
         if (Keyboard::isKeyPressed(Keyboard::Space) || Keyboard::isKeyPressed(Keyboard::Enter)) {
             break;
         }
-        showEndingScreen(window, gameFont, score);
     }
 }
 

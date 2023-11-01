@@ -61,11 +61,12 @@ void wait(int duration) {
 	}
 }
 
-void dropBallIn(PhysicsRectangle& ball, World& world, bool &isPlaying) {
+void dropBallIn(PhysicsRectangle& ball, World& world, bool &isPlaying, bool &hasAppliedBoost) {
 	ball.setCenter(Vector2f(300, 420));
-	ball.setVelocity(Vector2f(0.2, 0.2));
+	ball.setVelocity(Vector2f(0.2, 0.3));
 	world.AddPhysicsBody(ball);
 	isPlaying = true;
+	hasAppliedBoost = false;
 }
 
 
@@ -140,7 +141,7 @@ void showEndingScreen(RenderWindow& window, Font font, int score) {
 
 	Text scoreText;
 	scoreText.setFont(font);
-	scoreText.setString("Your score: " + to_string(score));
+	scoreText.setString("Your score:\n" + to_string(score));
 	FloatRect stSz(scoreText.getGlobalBounds());
 	scoreText.setPosition(300 - (stSz.width / 2), 420 - (stSz.height / 2));
 

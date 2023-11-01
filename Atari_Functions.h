@@ -19,7 +19,7 @@ void movePaddle(PhysicsRectangle &paddle, int ellapsedMS, float pixelConstant);
 
 void showStartingScreen(RenderWindow& window, Font font);
 
-void dropBallIn(PhysicsRectangle& ball, World& world, bool &isPlaying);
+void dropBallIn(PhysicsRectangle& ball, World& world, bool &isPlaying, bool &hasAppliedBoost);
 
 /// <summary>
 /// Seconds to freeze program. Equal to JavaScript .setTimeOut(()=>{...},duration);
