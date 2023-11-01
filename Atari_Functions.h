@@ -26,3 +26,5 @@ void dropBallIn(PhysicsRectangle& ball, World& world, bool &isPlaying);
 /// </summary>
 /// <param name="duration"></param>
 void wait(int duration);
+
+void showEndingScreen(RenderWindow &window, Font font, int score);

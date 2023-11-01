@@ -70,18 +70,17 @@ void dropBallIn(PhysicsRectangle& ball, World& world, bool &isPlaying) {
 
 
 void showStartingScreen(RenderWindow& window, Font font) {
-	PhysicsRectangle backboard;
+	RectangleShape backboard;
 	backboard.setSize(Vector2f(400, 200));
-	backboard.setCenter(Vector2f(300, 400));
-	backboard.setFillColor(Color(250, 200, 60));
-	backboard.setStatic(true);
+	backboard.setPosition(Vector2f(100, 300));
+	backboard.setFillColor(Color(251, 128, 20));
 
 	Text welcomeText;
 	welcomeText.setFont(font);
 	welcomeText.setCharacterSize(20);
-	welcomeText.setString("Welcome to Breakout.\nPress space\nto start.");
+	welcomeText.setString(" Welcome to Breakout\n\nPress space to start:");
 	FloatRect welSz(welcomeText.getGlobalBounds());
-	welcomeText.setPosition(300 - (welSz.width / 2), 340 - (welSz.height / 2));
+	welcomeText.setPosition(300 - (welSz.width / 2), 360 - (welSz.height / 2));
 
 	Text countDownText;
 	int countDown(3);
@@ -124,4 +123,29 @@ void showStartingScreen(RenderWindow& window, Font font) {
 			}
 		}
 	}
+}
+
+void showEndingScreen(RenderWindow& window, Font font, int score) {
+	RectangleShape backboard;
+	backboard.setSize(Vector2f(400, 200));
+	backboard.setPosition(Vector2f(100, 300));
+	backboard.setFillColor(Color(34, 32, 246));
+
+	Text gameOverText;
+	gameOverText.setFont(font);
+	gameOverText.setCharacterSize(30);
+	gameOverText.setString("Game Over!!");
+	FloatRect goSz(gameOverText.getGlobalBounds());
+	gameOverText.setPosition(300 - (goSz.width / 2), 340 - (goSz.height / 2));
+
+	Text scoreText;
+	scoreText.setFont(font);
+	scoreText.setString("Your score: " + to_string(score));
+	FloatRect stSz(scoreText.getGlobalBounds());
+	scoreText.setPosition(300 - (stSz.width / 2), 420 - (stSz.height / 2));
+
+	window.draw(backboard);
+	window.draw(gameOverText);
+	window.draw(scoreText);
+	window.display();
 }

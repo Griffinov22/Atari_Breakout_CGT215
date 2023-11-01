@@ -169,7 +169,7 @@ int main()
     Clock clock;
     Time lastTime(clock.getElapsedTime());
 
-    while (true) {
+    while (lives > 0) {
         Time currentTime(clock.getElapsedTime());
         int ellapsedMS((currentTime - lastTime).asMilliseconds());
 
@@ -215,6 +215,12 @@ int main()
             bricks.DoRemovals();
         }
 
+    }
+    while (true) {
+        if (Keyboard::isKeyPressed(Keyboard::Space) || Keyboard::isKeyPressed(Keyboard::Enter)) {
+            break;
+        }
+        showEndingScreen(window, gameFont, score);
     }
 }
 
