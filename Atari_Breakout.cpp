@@ -12,7 +12,7 @@ using namespace sfp;
 
 
 //options
-const float pixelConstant(0.8);
+const float pixelConstant(0.5);
 const Color wallColor(255, 255, 255);
 const Color paddleColor(2, 89, 252);
     //brick colors
@@ -29,8 +29,15 @@ int main()
     World world(Vector2f(0, 0));
     int lives(3);
     int score(0);
+    bool isPlaying(false);
     bool hasSeenStartingScreen(false);
 
+    //ball
+    PhysicsRectangle ball;
+    ball.setSize(Vector2f(10, 10));
+    ball.onCollision = [](PhysicsBodyCollisionResult res) {
+        cout << "collision" << endl;
+    };
     //walls
     PhysicsRectangle leftWall;
     leftWall.setSize(Vector2f(10, 725));
@@ -55,6 +62,14 @@ int main()
     floor.setCenter(Vector2f(300, 850));
     floor.setStatic(true);
     world.AddPhysicsBody(floor);
+    floor.onCollision = [&lives, &isPlaying, &ball, &world](PhysicsBodyCollisionResult res) {
+        if (res.object2 == ball) {
+            isPlaying = false;
+            lives--;
+            world.RemovePhysicsBody(ball);
+
+        }
+        };
 
     //paddle and side bars
     PhysicsRectangle paddle;
@@ -63,6 +78,21 @@ int main()
     paddle.setFillColor(paddleColor);
     paddle.setStatic(true);
     world.AddPhysicsBody(paddle);
+    paddle.onCollision = [&ball, &paddle](PhysicsBodyCollisionResult res) {
+        if (res.object2 == ball) {
+            FloatRect padSz(paddle.getGlobalBounds());
+            Vector2f ballPos(ball.getCenter());
+
+            //check if ball collided on left,center,right side of paddle
+            //do not apply force if ball hits middle 20% of paddle
+            if (ballPos.x < (padSz.left + (padSz.width * 0.4))) {
+                ball.applyImpulse(Vector2f(-0.05,0));
+            }
+            else if (ballPos.x > ((padSz.left + (padSz.width * 0.6)))) {
+                ball.applyImpulse(Vector2f(0.05,0));
+            }
+        }
+        };
     //side bars
     PhysicsRectangle rightBar;
     rightBar.setSize(Vector2f(10, 15));
@@ -75,12 +105,6 @@ int main()
     leftBar.setFillColor(paddleColor);
     world.AddPhysicsBody(leftBar);
 
-    //ball
-    PhysicsRectangle ball;
-    ball.setSize(Vector2f(10, 10));
-    ball.onCollision = [](PhysicsBodyCollisionResult res) {
-        cout << "collision" << endl;
-    };
 
     PhysicsShapeList<PhysicsRectangle> bricks;
     //12 bricks here
@@ -114,8 +138,15 @@ int main()
             newBrick.setSize(Vector2f(42.9167, 20));
             newBrick.setFillColor(brickColor);
             newBrick.setCenter(Vector2f((15 + (42.9167 / 2)) + (i * 42.9167) + (i * starterX), starterY));
-            world.AddPhysicsBody(newBrick);
             newBrick.setStatic(true);
+            world.AddPhysicsBody(newBrick);
+            newBrick.onCollision = [&ball, &window, &world, &newBrick, &bricks, &score](PhysicsBodyCollisionResult res) {
+                if (res.object1 == newBrick && res.object2 == ball) {
+                    world.RemovePhysicsBody(newBrick);
+                    bricks.QueueRemove(newBrick);
+                    score += 10;
+                }
+                };
         }
     }
     
@@ -137,7 +168,6 @@ int main()
 
     Clock clock;
     Time lastTime(clock.getElapsedTime());
-    bool isPlaying(false);
 
     while (true) {
         Time currentTime(clock.getElapsedTime());
@@ -150,14 +180,13 @@ int main()
             
 
             window.clear();
-            if (isPlaying) {
-                window.draw(ball);
-            }
             window.draw(paddle);
             displayStaticRectangles(rects, window);
             for (PhysicsRectangle &brick : bricks) {
                 window.draw(brick);
             }
+            scoreText.setString(to_string(score));
+            livesText.setString(to_string(lives));
             FloatRect sts(scoreText.getGlobalBounds());
             FloatRect lts(livesText.getGlobalBounds());
             scoreText.setPosition(Vector2f(450 - (sts.width / 2), 100 - (sts.height / 2)));
@@ -165,17 +194,25 @@ int main()
             window.draw(scoreText);
             window.draw(livesText);
 
+            if (isPlaying) {
+                window.draw(ball);
+            } else if (!isPlaying && hasSeenStartingScreen) {
+                wait(1);
+                clock.restart();
+                lastTime = lastTime.Zero;
+                dropBallIn(ball, world, isPlaying);
+            }
+
             if (!hasSeenStartingScreen) {
                 showStartingScreen(window, gameFont);
                 hasSeenStartingScreen = true;
-                isPlaying = true;
-                ball.setCenter(Vector2f(300, 420));
-                ball.setVelocity(Vector2f(0.2, 1));
-                world.AddPhysicsBody(ball); // not working!
+                dropBallIn(ball, world, isPlaying);
+                clock.restart();
                 
             }
-            world.VisualizeAllBounds(window);
+
             window.display(); //DISPLAYING CHANGES
+            bricks.DoRemovals();
         }
 
     }

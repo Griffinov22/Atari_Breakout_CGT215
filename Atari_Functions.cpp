@@ -49,18 +49,25 @@ void movePaddle(PhysicsRectangle &paddle, int ellapsedMS, float pixelConstant) {
 	}
 }
 
-
 void wait(int duration) {
 	Clock clock;
 	Time lastTime(clock.getElapsedTime());
 	while (true) {
 		Time currentTime(clock.getElapsedTime());
 		int ellapsedMS((currentTime - lastTime).asMilliseconds());
-		if (ellapsedMS >= duration * 1000) {
+		if (ellapsedMS >= (duration * 1000)) {
 			break;
 		}
 	}
 }
+
+void dropBallIn(PhysicsRectangle& ball, World& world, bool &isPlaying) {
+	ball.setCenter(Vector2f(300, 420));
+	ball.setVelocity(Vector2f(0.2, 0.2));
+	world.AddPhysicsBody(ball);
+	isPlaying = true;
+}
+
 
 void showStartingScreen(RenderWindow& window, Font font) {
 	PhysicsRectangle backboard;
