@@ -3,6 +3,7 @@
 #include <iostream>
 #include <string>
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 #include <SFPhysics.h>
 
 using namespace std;
@@ -13,11 +14,13 @@ void shout();
 
 void loadTex(Texture &tex, string path);
 
+void loadMusic(SoundBuffer &buff, string path);
+
 void displayStaticRectangles(vector<PhysicsRectangle> sprites, RenderWindow &window);
 
-void movePaddle(PhysicsRectangle &paddle, int ellapsedMS, float pixelConstant);
+void movePaddle(PhysicsRectangle &paddle, int ellapsedMS, float pixelConstant, bool& hasAppliedBoost);
 
-void showStartingScreen(RenderWindow& window, Font font);
+void showStartingScreen(RenderWindow& window, Font font, Sound &countDownMusic);
 
 void dropBallIn(PhysicsRectangle& ball, World& world, bool &isPlaying, bool &hasAppliedBoost);
 
@@ -27,4 +30,4 @@ void dropBallIn(PhysicsRectangle& ball, World& world, bool &isPlaying, bool &has
 /// <param name="duration"></param>
 void wait(int duration);
 
-void showEndingScreen(RenderWindow &window, Font font, int score);
+void showEndingScreen(RenderWindow &window, Font font, int score, Sound &endGameMusic);

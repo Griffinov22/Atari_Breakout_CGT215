@@ -2,38 +2,38 @@
 C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.37.32822\include\any(13): warning STL4038: The contents of <any> are available only with C++17 or later.
 C:\Users\griff\OneDrive\Purdue2023\CGT 215\final_project\Atari_Breakout\packages\SFPhysics.2.2.6\build\native\include\SFPhysics\BoundsCollisionResult.h(9,2): warning C4099: 'sfp::BoundsCollisionResult': type name first seen using 'class' now seen using 'struct'
 C:\Users\griff\OneDrive\Purdue2023\CGT 215\final_project\Atari_Breakout\packages\SFPhysics.2.2.6\build\native\include\SFPhysics\BoundsCollisionResult.h(8,9): message : see declaration of 'sfp::BoundsCollisionResult'
-C:\Users\griff\OneDrive\Purdue2023\CGT 215\final_project\Atari_Breakout\Atari_Breakout.cpp(15,27): warning C4305: 'initializing': truncation from 'double' to 'float'
-C:\Users\griff\OneDrive\Purdue2023\CGT 215\final_project\Atari_Breakout\Atari_Breakout.cpp(90,45): warning C4305: 'argument': truncation from 'double' to 'T'
+C:\Users\griff\OneDrive\Purdue2023\CGT 215\final_project\Atari_Breakout\Atari_Breakout.cpp(17,27): warning C4305: 'initializing': truncation from 'double' to 'float'
+C:\Users\griff\OneDrive\Purdue2023\CGT 215\final_project\Atari_Breakout\Atari_Breakout.cpp(118,45): warning C4305: 'argument': truncation from 'double' to 'T'
           with
           [
               T=float
           ]
-C:\Users\griff\OneDrive\Purdue2023\CGT 215\final_project\Atari_Breakout\Atari_Breakout.cpp(93,44): warning C4305: 'argument': truncation from 'double' to 'T'
+C:\Users\griff\OneDrive\Purdue2023\CGT 215\final_project\Atari_Breakout\Atari_Breakout.cpp(121,44): warning C4305: 'argument': truncation from 'double' to 'T'
           with
           [
               T=float
           ]
-C:\Users\griff\OneDrive\Purdue2023\CGT 215\final_project\Atari_Breakout\Atari_Breakout.cpp(139,39): warning C4305: 'argument': truncation from 'double' to 'T'
+C:\Users\griff\OneDrive\Purdue2023\CGT 215\final_project\Atari_Breakout\Atari_Breakout.cpp(167,39): warning C4305: 'argument': truncation from 'double' to 'T'
           with
           [
               T=float
           ]
-C:\Users\griff\OneDrive\Purdue2023\CGT 215\final_project\Atari_Breakout\Atari_Breakout.cpp(141,96): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+C:\Users\griff\OneDrive\Purdue2023\CGT 215\final_project\Atari_Breakout\Atari_Breakout.cpp(169,96): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
           with
           [
               T=float
           ]
-C:\Users\griff\OneDrive\Purdue2023\CGT 215\final_project\Atari_Breakout\Atari_Breakout.cpp(141,78): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
+C:\Users\griff\OneDrive\Purdue2023\CGT 215\final_project\Atari_Breakout\Atari_Breakout.cpp(169,78): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
           with
           [
               T=float
           ]
-C:\Users\griff\OneDrive\Purdue2023\CGT 215\final_project\Atari_Breakout\Atari_Breakout.cpp(165,98): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
+C:\Users\griff\OneDrive\Purdue2023\CGT 215\final_project\Atari_Breakout\Atari_Breakout.cpp(193,98): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
           with
           [
               T=float
           ]
-C:\Users\griff\OneDrive\Purdue2023\CGT 215\final_project\Atari_Breakout\Atari_Breakout.cpp(165,69): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
+C:\Users\griff\OneDrive\Purdue2023\CGT 215\final_project\Atari_Breakout\Atari_Breakout.cpp(193,69): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
           with
           [
               T=float

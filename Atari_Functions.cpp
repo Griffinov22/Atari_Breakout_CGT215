@@ -3,6 +3,7 @@
 #include <string>
 #include <SFML/Graphics.hpp>
 #include <SFPhysics.h>
+#include <SFML/Audio.hpp>
 
 using namespace std;
 using namespace sf;
@@ -20,15 +21,25 @@ void loadTex(Texture &tex, string path) {
 	}
 }
 
+void loadMusic(SoundBuffer& buff, string path) {
+	if (!buff.loadFromFile(path)) {
+		cout << "music file not found at " << path << endl;
+		exit(1);
+	}
+}
+
 void displayStaticRectangles(vector<PhysicsRectangle> sprites, RenderWindow &window) {
 	for (PhysicsRectangle pr : sprites) {
 		window.draw(pr);
 	}
 }
 
-void movePaddle(PhysicsRectangle &paddle, int ellapsedMS, float pixelConstant) {
+void movePaddle(PhysicsRectangle &paddle, int ellapsedMS, float pixelConstant, bool &hasAppliedBoost) {
 	
 	Vector2f currPos(paddle.getCenter());
+
+	//if play hits the top layer of red bricks a boost is applied to the ball. To supplement faster ball -> faster paddle movement
+	pixelConstant = hasAppliedBoost ? pixelConstant *= 1.05 : pixelConstant;
 
 	if (currPos.x < 37.5) {
 		paddle.setCenter(Vector2f(37.5, currPos.y));
@@ -63,14 +74,14 @@ void wait(int duration) {
 
 void dropBallIn(PhysicsRectangle& ball, World& world, bool &isPlaying, bool &hasAppliedBoost) {
 	ball.setCenter(Vector2f(300, 420));
-	ball.setVelocity(Vector2f(0.2, 0.3));
+	ball.setVelocity(Vector2f(0.11, 0.2));
 	world.AddPhysicsBody(ball);
 	isPlaying = true;
 	hasAppliedBoost = false;
 }
 
 
-void showStartingScreen(RenderWindow& window, Font font) {
+void showStartingScreen(RenderWindow& window, Font font, Sound &countDownMusic) {
 	RectangleShape backboard;
 	backboard.setSize(Vector2f(400, 200));
 	backboard.setPosition(Vector2f(100, 300));
@@ -111,6 +122,7 @@ void showStartingScreen(RenderWindow& window, Font font) {
 		
 		if (!hasClickedSpace) {
 			while (!Keyboard::isKeyPressed(Keyboard::Space));
+			countDownMusic.play();
 			hasClickedSpace = true;
 			clock.restart(); //allows currentTime to be accurate
 		}
@@ -126,7 +138,10 @@ void showStartingScreen(RenderWindow& window, Font font) {
 	}
 }
 
-void showEndingScreen(RenderWindow& window, Font font, int score) {
+void showEndingScreen(RenderWindow& window, Font font, int score, Sound &endGameMusic) {
+	//play music
+	endGameMusic.play();
+
 	RectangleShape backboard;
 	backboard.setSize(Vector2f(400, 200));
 	backboard.setPosition(Vector2f(100, 300));
@@ -139,14 +154,21 @@ void showEndingScreen(RenderWindow& window, Font font, int score) {
 	FloatRect goSz(gameOverText.getGlobalBounds());
 	gameOverText.setPosition(300 - (goSz.width / 2), 340 - (goSz.height / 2));
 
+	Text ysText;
+	ysText.setFont(font);
+	ysText.setString("Your score:");
+	FloatRect ysSz(ysText.getGlobalBounds());
+	ysText.setPosition(300 - (ysSz.width / 2), 410 - (ysSz.height / 2));
+
 	Text scoreText;
 	scoreText.setFont(font);
-	scoreText.setString("Your score:\n" + to_string(score));
+	scoreText.setString(to_string(score));
 	FloatRect stSz(scoreText.getGlobalBounds());
-	scoreText.setPosition(300 - (stSz.width / 2), 420 - (stSz.height / 2));
+	scoreText.setPosition(300 - (stSz.width / 2), 455 - (stSz.height / 2));
 
 	window.draw(backboard);
 	window.draw(gameOverText);
+	window.draw(ysText);
 	window.draw(scoreText);
 	window.display();
 }

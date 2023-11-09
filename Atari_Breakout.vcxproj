@@ -136,6 +136,7 @@
     <ClInclude Include="Atari_Functions.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\..\..\..\Desktop\Atari_Breakout_CGT215\countDown.ogg" />
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

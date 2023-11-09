@@ -29,5 +29,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="..\..\..\..\..\Desktop\Atari_Breakout_CGT215\countDown.ogg">
+      <Filter>Source Files</Filter>
+    </None>
   </ItemGroup>
 </Project>

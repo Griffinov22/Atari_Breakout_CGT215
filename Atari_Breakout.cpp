@@ -2,8 +2,10 @@
 
 #include <iostream>
 #include <string>
+#include <algorithm>
 #include <SFML/Graphics.hpp>
 #include <SFPhysics.h>
+#include <SFML/Audio.hpp>
 #include "Atari_Functions.h"
 
 using namespace std;
@@ -32,23 +34,48 @@ int main()
     bool isPlaying(false);
     bool hasSeenStartingScreen(false);
     bool hasAppliedBoost(false);
+    bool hasWon(false);
+
+    //music
+    SoundBuffer countDownBuff;
+    loadMusic(countDownBuff, "./music/countDown.ogg");
+    Sound countDownMusic;
+    countDownMusic.setBuffer(countDownBuff);
+
+    SoundBuffer ballFailbuff;
+    loadMusic(ballFailbuff, "./music/ballFail.ogg");
+    Sound ballFailMusic;
+    ballFailMusic.setBuffer(ballFailbuff);
+
+    SoundBuffer endGameBuff;
+    loadMusic(endGameBuff, "./music/endGame.ogg");
+    Sound endGameMusic;
+    endGameMusic.setBuffer(endGameBuff);
+    
+    SoundBuffer thudBuffer;
+    loadMusic(thudBuffer, "./music/plink.ogg");
+    Sound thudSound;
+    thudSound.setBuffer(thudBuffer);
 
     //ball
     PhysicsRectangle ball;
     ball.setSize(Vector2f(10, 10));
-    ball.onCollision = [](PhysicsBodyCollisionResult res) {
+    ball.onCollision = [&thudSound, &ball](PhysicsBodyCollisionResult res) {
         cout << "collision" << endl;
+        if (ball.getCenter().y < 800) {
+            thudSound.play();
+        }
     };
     //walls
     PhysicsRectangle leftWall;
-    leftWall.setSize(Vector2f(10, 725));
-    leftWall.setCenter(Vector2f(5, 437.5));
+    leftWall.setSize(Vector2f(10, 750)); //start 75 - 825
+    leftWall.setCenter(Vector2f(5, 450));
     leftWall.setStatic(true);
     world.AddPhysicsBody(leftWall);
     //right
     PhysicsRectangle rightWall;
-    rightWall.setSize(Vector2f(10, 725));
-    rightWall.setCenter(Vector2f(595, 437.5));
+    rightWall.setSize(Vector2f(10, 750));
+    rightWall.setCenter(Vector2f(595, 450));
     rightWall.setStatic(true);
     world.AddPhysicsBody(rightWall);
     //ceiling
@@ -63,8 +90,9 @@ int main()
     floor.setCenter(Vector2f(300, 850));
     floor.setStatic(true);
     world.AddPhysicsBody(floor);
-    floor.onCollision = [&lives, &isPlaying, &ball, &world](PhysicsBodyCollisionResult res) {
+    floor.onCollision = [&lives, &isPlaying, &ball, &world, &ballFailMusic](PhysicsBodyCollisionResult res) {
         if (res.object2 == ball) {
+            ballFailMusic.play();
             isPlaying = false;
             lives--;
             world.RemovePhysicsBody(ball);
@@ -196,7 +224,7 @@ int main()
         if (ellapsedMS > 3) {
             lastTime = currentTime;
             world.UpdatePhysics(ellapsedMS);
-            movePaddle(paddle, ellapsedMS, pixelConstant);
+            movePaddle(paddle, ellapsedMS, pixelConstant, hasAppliedBoost);
             
 
             window.clear();
@@ -219,7 +247,7 @@ int main()
             }
 
             if (!hasSeenStartingScreen) {
-                showStartingScreen(window, gameFont);
+                showStartingScreen(window, gameFont, countDownMusic);
                 hasSeenStartingScreen = true;
                 dropBallIn(ball, world, isPlaying, hasAppliedBoost);
                 clock.restart();
@@ -229,6 +257,11 @@ int main()
             window.display(); //DISPLAYING CHANGES
 
             bricks.DoRemovals();
+            //check if PhysicsShapeList has length
+            //if (distance(bricks.begin(), bricks.end()) <= 0) {
+            //    break;
+            //}
+
             if (!isPlaying && hasSeenStartingScreen) {
                 wait(2);
                 clock.restart();
@@ -239,7 +272,7 @@ int main()
 
     }
     window.display(); //allows display of lives to be zero
-    showEndingScreen(window, gameFont, score);
+    showEndingScreen(window, gameFont, score, endGameMusic);
 
     while (true) {
         if (Keyboard::isKeyPressed(Keyboard::Space) || Keyboard::isKeyPressed(Keyboard::Enter)) {
