@@ -30,4 +30,11 @@ void dropBallIn(PhysicsRectangle& ball, World& world, bool &isPlaying, bool &has
 /// <param name="duration"></param>
 void wait(int duration);
 
+void fillBrickList(PhysicsShapeList<PhysicsRectangle> &bricks,
+	Color redBrick, Color orangeBrick, Color greenBrick, Color yellowBrick, 
+	PhysicsRectangle &ball, RenderWindow &window, World &world, 
+	bool &hasAppliedBoost, int &score);
+
+void showSecondLevelScreen(RenderWindow &window, Font font, Color redBrick, Color orangeBrick, Color greenBrick, Color yellowBrick);
+
 void showEndingScreen(RenderWindow &window, Font font, int score, Sound &endGameMusic);

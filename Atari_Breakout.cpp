@@ -35,6 +35,7 @@ int main()
     bool hasSeenStartingScreen(false);
     bool hasAppliedBoost(false);
     bool hasWon(false);
+    bool isFirstLevel(true);
 
     //music
     SoundBuffer countDownBuff;
@@ -137,66 +138,7 @@ int main()
 
     PhysicsShapeList<PhysicsRectangle> bricks;
     //12 bricks here
-    Color brickColor;
-    for (int j(0); j < 8; j++) {
-        int starterX(5);
-        int starterY(175 + (j * 30));
-        switch (j) {
-        case 0:
-        case 1:
-            brickColor = redBrick;
-            break;
-        case 2:
-        case 3:
-            brickColor = orangeBrick;
-            break;
-        case 4:
-        case 5:
-            brickColor = greenBrick;
-            break;
-        case 6:
-        case 7:
-            brickColor = yellowBrick;
-            break;
-        default:
-            break;
-        }
-
-        for (int i(0); i < 12; i++) {
-            PhysicsRectangle& newBrick = bricks.Create();
-            newBrick.setSize(Vector2f(42.9167, 20));
-            newBrick.setFillColor(brickColor);
-            newBrick.setCenter(Vector2f((15 + (42.9167 / 2)) + (i * 42.9167) + (i * starterX), starterY));
-            newBrick.setStatic(true);
-            world.AddPhysicsBody(newBrick);
-            newBrick.onCollision = [&ball, &window, &world, &newBrick, &bricks, &score, &hasAppliedBoost, j,i](PhysicsBodyCollisionResult res) {
-                Color nbc(newBrick.getFillColor());
-                if (res.object2 == ball) {
-                    world.RemovePhysicsBody(newBrick);
-                    bricks.QueueRemove(newBrick);
-                    
-                    if (nbc == yellowBrick) {
-                        score += 10;    
-                    }
-                    else if (nbc == greenBrick) {
-                        score += 30;
-                    }
-                    else if (nbc == orangeBrick) {
-                        score += 50;
-                    }
-                    else if (nbc == redBrick) {
-                        score += 70;
-                    }
-                }
-                if (j == 0 && !hasAppliedBoost) {
-                    //makes ball go faster when contact with upper level of red bricks!
-                    ball.applyImpulse(Vector2f(ball.getVelocity().x * 1.08, ball.getVelocity().y * 1.08)); 
-                    hasAppliedBoost = true;
-                }
-
-            };
-        }
-    }
+    fillBrickList(bricks, redBrick, orangeBrick, greenBrick, yellowBrick, ball, window, world, hasAppliedBoost, score);
     
     Font gameFont;
     gameFont.loadFromFile("Rubic.ttf");
@@ -254,15 +196,27 @@ int main()
                 
             }
 
-            window.display(); //DISPLAYING CHANGES
 
+            window.display(); //DISPLAYING CHANGES
             bricks.DoRemovals();
             //check if PhysicsShapeList has length
-            //if (distance(bricks.begin(), bricks.end()) <= 0) {
-            //    break;
-            //}
+            if (bricks.Count() <= 11) {
+                if (isPlaying == false) {
+                    //wait till screen is cleared on second loop
+                    cout << "level two commensing" << endl;
+                    showSecondLevelScreen(window, gameFont, redBrick, orangeBrick, greenBrick, yellowBrick);
+                    //reinstantaite bricks for level 2
+                    fillBrickList(bricks, redBrick, orangeBrick, greenBrick, yellowBrick, ball, window, world, hasAppliedBoost, score);
 
-            if (!isPlaying && hasSeenStartingScreen) {
+                }
+                world.RemovePhysicsBody(ball);
+                isFirstLevel = false;
+                isPlaying = false;
+
+            }
+
+
+            if (!isPlaying && hasSeenStartingScreen && isFirstLevel) {
                 wait(2);
                 clock.restart();
                 lastTime = lastTime.Zero;
