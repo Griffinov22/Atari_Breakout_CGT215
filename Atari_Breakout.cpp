@@ -207,6 +207,8 @@ int main()
                     showSecondLevelScreen(window, gameFont, redBrick, orangeBrick, greenBrick, yellowBrick);
                     //reinstantaite bricks for level 2
                     fillBrickList(bricks, redBrick, orangeBrick, greenBrick, yellowBrick, ball, window, world, hasAppliedBoost, score);
+                    hasAppliedBoost = false; // resetting boost for hitting upper level bricks once
+                    dropBallIn(ball, world, isPlaying, hasAppliedBoost);
 
                 }
                 world.RemovePhysicsBody(ball);
