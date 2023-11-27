@@ -1,22 +1,38 @@
-﻿  Atari_Breakout.cpp
+﻿  Atari_Functions.cpp
 C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.37.32822\include\any(13): warning STL4038: The contents of <any> are available only with C++17 or later.
 C:\Users\griff\OneDrive\Purdue2023\CGT 215\final_project\Atari_Breakout\packages\SFPhysics.2.3.1\build\native\include\SFPhysics\BoundsCollisionResult.h(9,2): warning C4099: 'sfp::BoundsCollisionResult': type name first seen using 'class' now seen using 'struct'
 C:\Users\griff\OneDrive\Purdue2023\CGT 215\final_project\Atari_Breakout\packages\SFPhysics.2.3.1\build\native\include\SFPhysics\BoundsCollisionResult.h(8,9): message : see declaration of 'sfp::BoundsCollisionResult'
-C:\Users\griff\OneDrive\Purdue2023\CGT 215\final_project\Atari_Breakout\Atari_Breakout.cpp(17,27): warning C4305: 'initializing': truncation from 'double' to 'float'
-C:\Users\griff\OneDrive\Purdue2023\CGT 215\final_project\Atari_Breakout\Atari_Breakout.cpp(119,45): warning C4305: 'argument': truncation from 'double' to 'T'
+C:\Users\griff\OneDrive\Purdue2023\CGT 215\final_project\Atari_Breakout\Atari_Functions.cpp(44,58): warning C4305: '*=': truncation from 'double' to 'float'
+C:\Users\griff\OneDrive\Purdue2023\CGT 215\final_project\Atari_Breakout\Atari_Functions.cpp(82,28): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
           with
           [
               T=float
           ]
-C:\Users\griff\OneDrive\Purdue2023\CGT 215\final_project\Atari_Breakout\Atari_Breakout.cpp(122,44): warning C4305: 'argument': truncation from 'double' to 'T'
+C:\Users\griff\OneDrive\Purdue2023\CGT 215\final_project\Atari_Breakout\Atari_Functions.cpp(191,30): warning C4305: 'argument': truncation from 'double' to 'T'
           with
           [
               T=float
           ]
+C:\Users\griff\OneDrive\Purdue2023\CGT 215\final_project\Atari_Breakout\Atari_Functions.cpp(193,87): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\griff\OneDrive\Purdue2023\CGT 215\final_project\Atari_Breakout\Atari_Functions.cpp(193,69): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\griff\OneDrive\Purdue2023\CGT 215\final_project\Atari_Breakout\Atari_Functions.cpp(218,56): warning C4305: 'argument': truncation from 'double' to 'T'
+          with
+          [
+              T=float
+          ]
+C:\Users\griff\OneDrive\Purdue2023\CGT 215\final_project\Atari_Breakout\Atari_Functions.cpp(255,12): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
 C:\Users\griff\OneDrive\Purdue2023\CGT 215\final_project\Atari_Breakout\packages\SFPhysics.2.3.1\build\native\include\SFPhysics\PhysicsShapeList.h(77,29): warning C4267: 'return': conversion from 'size_t' to 'int', possible loss of data
 C:\Users\griff\OneDrive\Purdue2023\CGT 215\final_project\Atari_Breakout\packages\SFPhysics.2.3.1\build\native\include\SFPhysics\PhysicsShapeList.h(76,13): message : while compiling class template member function 'int sfp::PhysicsShapeList<sfp::PhysicsRectangle>::Count(void)'
-C:\Users\griff\OneDrive\Purdue2023\CGT 215\final_project\Atari_Breakout\Atari_Breakout.cpp(203,13): message : see the first reference to 'sfp::PhysicsShapeList<sfp::PhysicsRectangle>::Count' in 'main'
-C:\Users\griff\OneDrive\Purdue2023\CGT 215\final_project\Atari_Breakout\Atari_Breakout.cpp(139,40): message : see reference to class template instantiation 'sfp::PhysicsShapeList<sfp::PhysicsRectangle>' being compiled
+C:\Users\griff\OneDrive\Purdue2023\CGT 215\final_project\Atari_Breakout\Atari_Functions.cpp(215,5): message : see the first reference to 'sfp::PhysicsShapeList<sfp::PhysicsRectangle>::Count' in 'fillBrickList::<lambda_1>::operator ()'
+C:\Users\griff\OneDrive\Purdue2023\CGT 215\final_project\Atari_Breakout\Atari_Functions.cpp(190,33): message : see reference to class template instantiation 'sfp::PhysicsShapeList<sfp::PhysicsRectangle>' being compiled
 C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.37.32822\include\type_traits(1762,67): warning C4244: 'argument': conversion from '_Ty' to 'unsigned int', possible loss of data
           with
           [

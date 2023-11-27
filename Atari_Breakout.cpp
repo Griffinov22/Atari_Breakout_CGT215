@@ -14,7 +14,7 @@ using namespace sfp;
 
 
 //options
-const float pixelConstant(0.45);
+const float pixelConstant(0.40);
 const Color wallColor(255, 255, 255);
 const Color paddleColor(2, 89, 252);
     //brick colors
@@ -36,6 +36,7 @@ int main()
     bool hasAppliedBoost(false);
     bool hasWon(false);
     bool isFirstLevel(true);
+    srand(time(0));
 
     //music
     SoundBuffer countDownBuff;
@@ -58,12 +59,19 @@ int main()
     Sound thudSound;
     thudSound.setBuffer(thudBuffer);
 
+    SoundBuffer nextLevelBuffer;
+    loadMusic(nextLevelBuffer, "./music/completeLevel.ogg");
+    Sound nextLevelSound;
+    nextLevelSound.setBuffer(nextLevelBuffer);
+
     //ball
     PhysicsRectangle ball;
     ball.setSize(Vector2f(10, 10));
     ball.onCollision = [&thudSound, &ball](PhysicsBodyCollisionResult res) {
-        cout << "collision" << endl;
+        cout << "x: " << ball.getVelocity().x << endl;
+        cout << "y: " << ball.getVelocity().y << endl;
         if (ball.getCenter().y < 800) {
+            thudSound.stop();
             thudSound.play();
         }
     };
@@ -85,21 +93,6 @@ int main()
     ceiling.setCenter(Vector2f(300, 50));
     ceiling.setStatic(true);
     world.AddPhysicsBody(ceiling);
-    //floor
-    PhysicsRectangle floor;
-    floor.setSize(Vector2f(600, 50));
-    floor.setCenter(Vector2f(300, 850));
-    floor.setStatic(true);
-    world.AddPhysicsBody(floor);
-    floor.onCollision = [&lives, &isPlaying, &ball, &world, &ballFailMusic](PhysicsBodyCollisionResult res) {
-        if (res.object2 == ball) {
-            ballFailMusic.play();
-            isPlaying = false;
-            lives--;
-            world.RemovePhysicsBody(ball);
-
-        }
-        };
 
     //paddle and side bars
     PhysicsRectangle paddle;
@@ -121,6 +114,23 @@ int main()
             else if (ballPos.x > ((padSz.left + (padSz.width * 0.6)))) {
                 ball.applyImpulse(Vector2f(0.12,0));
             }
+        }
+        };
+
+    //floor
+    PhysicsRectangle floor;
+    floor.setSize(Vector2f(600, 50));
+    floor.setCenter(Vector2f(300, 850));
+    floor.setStatic(true);
+    world.AddPhysicsBody(floor);
+    floor.onCollision = [&lives, &isPlaying, &ball, &world, &ballFailMusic, &paddle](PhysicsBodyCollisionResult res) {
+        if (res.object2 == ball) {
+            paddle.setCenter(Vector2f(300, 725));
+            ballFailMusic.play();
+            isPlaying = false;
+            lives--;
+            world.RemovePhysicsBody(ball);
+
         }
         };
     //side bars
@@ -163,7 +173,7 @@ int main()
         Time currentTime(clock.getElapsedTime());
         int ellapsedMS((currentTime - lastTime).asMilliseconds());
 
-        if (ellapsedMS > 3) {
+        if (ellapsedMS > 5) {
             lastTime = currentTime;
             world.UpdatePhysics(ellapsedMS);
             movePaddle(paddle, ellapsedMS, pixelConstant, hasAppliedBoost);
@@ -200,25 +210,29 @@ int main()
             window.display(); //DISPLAYING CHANGES
             bricks.DoRemovals();
             //check if PhysicsShapeList has length
-            if (bricks.Count() <= 11) {
-                if (isPlaying == false) {
-                    //wait till screen is cleared on second loop
-                    cout << "level two commensing" << endl;
-                    showSecondLevelScreen(window, gameFont, redBrick, orangeBrick, greenBrick, yellowBrick);
-                    //reinstantaite bricks for level 2
-                    fillBrickList(bricks, redBrick, orangeBrick, greenBrick, yellowBrick, ball, window, world, hasAppliedBoost, score);
-                    hasAppliedBoost = false; // resetting boost for hitting upper level bricks once
-                    dropBallIn(ball, world, isPlaying, hasAppliedBoost);
+            if (bricks.Count() == 0) {
+                
+                if (isFirstLevel == true) {
+                    isFirstLevel = false;
 
+                    paddle.setCenter(Vector2f(300, 725));
+                    fillBrickList(bricks, redBrick, orangeBrick, greenBrick, yellowBrick, ball, window, world, hasAppliedBoost, score);
+                    showSecondLevelScreen(window, gameFont, redBrick, orangeBrick, greenBrick, yellowBrick, nextLevelSound);
+                    
+                    isPlaying = false;
+                    world.RemovePhysicsBody(ball);
+                    
+                } else {
+                    //has gone through two levels of bricks
+                    cout << "won" << endl;
+                    hasWon = true;
+                    break;
                 }
-                world.RemovePhysicsBody(ball);
-                isFirstLevel = false;
-                isPlaying = false;
 
             }
 
 
-            if (!isPlaying && hasSeenStartingScreen && isFirstLevel) {
+            if (!isPlaying && hasSeenStartingScreen) {
                 wait(2);
                 clock.restart();
                 lastTime = lastTime.Zero;
@@ -227,8 +241,9 @@ int main()
         }
 
     }
-    window.display(); //allows display of lives to be zero
-    showEndingScreen(window, gameFont, score, endGameMusic);
+
+    window.clear();
+    showEndingScreen(window, gameFont, score, endGameMusic, hasWon, yellowBrick);
 
     while (true) {
         if (Keyboard::isKeyPressed(Keyboard::Space) || Keyboard::isKeyPressed(Keyboard::Enter)) {

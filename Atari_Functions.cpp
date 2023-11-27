@@ -75,8 +75,11 @@ void wait(int duration) {
 }
 
 void dropBallIn(PhysicsRectangle& ball, World& world, bool &isPlaying, bool &hasAppliedBoost) {
+
+	int randBool = rand() % 2;
+
 	ball.setCenter(Vector2f(300, 420));
-	ball.setVelocity(Vector2f(0.11, 0.2));
+	ball.setVelocity(Vector2f(randBool ? 0.11 : -0.11, 0.25));
 	world.AddPhysicsBody(ball);
 	isPlaying = true;
 	hasAppliedBoost = false;
@@ -209,9 +212,10 @@ void fillBrickList(PhysicsShapeList<PhysicsRectangle>& bricks,
 						score += 70;
 					}
 				}
-				if (j == 0 && !hasAppliedBoost) {
+				if (j == 0 && !hasAppliedBoost && bricks.Count() >= 1) {
+					//dont apply impulse to next level, so the brick list will have 1 or 0 left in the list
 					//makes ball go faster when contact with upper level of red bricks!
-					ball.applyImpulse(Vector2f(ball.getVelocity().x * 1.04, ball.getVelocity().y * 1.04));
+					ball.applyImpulse(Vector2f(ball.getVelocity().x, -0.2));
 					hasAppliedBoost = true;
 				}
 
@@ -230,7 +234,10 @@ bool isSameColor(Color first, Color second) {
 	return true;
 }
 
-void showSecondLevelScreen(RenderWindow &window, Font font, Color redBrick, Color orangeBrick, Color greenBrick, Color yellowBrick) {
+void showSecondLevelScreen(RenderWindow &window, Font font, Color redBrick, Color orangeBrick, Color greenBrick, Color yellowBrick, Sound &nextLevelSound) {
+
+	nextLevelSound.play();
+	
 	RectangleShape backboard;
 	backboard.setSize(Vector2f(400, 200));
 	backboard.setPosition(Vector2f(100, 300));
@@ -254,6 +261,10 @@ void showSecondLevelScreen(RenderWindow &window, Font font, Color redBrick, Colo
 
 	while (true) {
 		// 1s = 1000ms
+		if (nextLevelSound.getStatus() == SoundSource::Stopped) {
+			// only play twice
+			nextLevelSound.play();
+		}
 		Time currentTime = clock.getElapsedTime();
 		int ellapsedSeconds((currentTime - lastTime).asMilliseconds());
 		if (ellapsedSeconds >= 200) {
@@ -262,7 +273,6 @@ void showSecondLevelScreen(RenderWindow &window, Font font, Color redBrick, Colo
 			}
 			while (isSameColor(newColor, oldColor)) {
 				int rand4 = rand() % 4;
-				cout << rand4 << endl;
 				newColor = colors[rand4];
 			}
 			backboard.setFillColor(newColor);
@@ -278,19 +288,31 @@ void showSecondLevelScreen(RenderWindow &window, Font font, Color redBrick, Colo
 }
 
 
-void showEndingScreen(RenderWindow& window, Font font, int score, Sound &endGameMusic) {
+void showEndingScreen(RenderWindow& window, Font font, int score, Sound &endGameMusic, bool hasWon, Color yellowBrick) {
 	//play music
 	endGameMusic.play();
 
 	RectangleShape backboard;
 	backboard.setSize(Vector2f(400, 200));
 	backboard.setPosition(Vector2f(100, 300));
-	backboard.setFillColor(Color(34, 32, 246));
+	if (hasWon) {
+		backboard.setFillColor(yellowBrick);
+	}
+	else {
+		backboard.setFillColor(Color(34, 32, 246));
+	}
 
 	Text gameOverText;
 	gameOverText.setFont(font);
-	gameOverText.setCharacterSize(30);
-	gameOverText.setString("Game Over!!");
+	if (hasWon) {
+		gameOverText.setCharacterSize(36);
+		gameOverText.setString("You Won!!");
+	}
+	else {
+		gameOverText.setCharacterSize(30);
+		gameOverText.setString("Game Over!!");
+
+	}
 	FloatRect goSz(gameOverText.getGlobalBounds());
 	gameOverText.setPosition(300 - (goSz.width / 2), 340 - (goSz.height / 2));
 
