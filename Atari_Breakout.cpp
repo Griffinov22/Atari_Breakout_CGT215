@@ -68,8 +68,6 @@ int main()
     PhysicsRectangle ball;
     ball.setSize(Vector2f(10, 10));
     ball.onCollision = [&thudSound, &ball](PhysicsBodyCollisionResult res) {
-        cout << "x: " << ball.getVelocity().x << endl;
-        cout << "y: " << ball.getVelocity().y << endl;
         if (ball.getCenter().y < 800) {
             thudSound.stop();
             thudSound.play();
@@ -173,7 +171,7 @@ int main()
         Time currentTime(clock.getElapsedTime());
         int ellapsedMS((currentTime - lastTime).asMilliseconds());
 
-        if (ellapsedMS > 5) {
+        if (ellapsedMS > 4) {
             lastTime = currentTime;
             world.UpdatePhysics(ellapsedMS);
             movePaddle(paddle, ellapsedMS, pixelConstant, hasAppliedBoost);
@@ -199,8 +197,8 @@ int main()
             }
 
             if (!hasSeenStartingScreen) {
-                showStartingScreen(window, gameFont, countDownMusic);
                 hasSeenStartingScreen = true;
+                showStartingScreen(window, gameFont, countDownMusic);
                 dropBallIn(ball, world, isPlaying, hasAppliedBoost);
                 clock.restart();
                 

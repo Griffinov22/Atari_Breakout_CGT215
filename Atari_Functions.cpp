@@ -162,7 +162,7 @@ void fillBrickList(PhysicsShapeList<PhysicsRectangle>& bricks,
 
 	//should be 8 rows in production
 	Color brickColor;
-	for (int j(0); j < 8; j++) {
+	for (int j(0); j < 1; j++) {
 		int starterX(5);
 		int starterY(175 + (j * 30));
 		switch (j) {
@@ -215,8 +215,13 @@ void fillBrickList(PhysicsShapeList<PhysicsRectangle>& bricks,
 				if (j == 0 && !hasAppliedBoost && bricks.Count() >= 1) {
 					//dont apply impulse to next level, so the brick list will have 1 or 0 left in the list
 					//makes ball go faster when contact with upper level of red bricks!
-					ball.applyImpulse(Vector2f(ball.getVelocity().x, -0.2));
 					hasAppliedBoost = true;
+
+					bool isPositive = ball.getVelocity().y <= 0;
+					//cout << "x: " << ball.getVelocity().x << endl;
+					//cout << "y: " << ball.getVelocity().y << endl;
+					cout << (isPositive ? -0.08 : 0.08) << endl;
+					ball.applyImpulse(Vector2f(0, (isPositive ? -0.08 : 0.08)));
 				}
 
 				};
