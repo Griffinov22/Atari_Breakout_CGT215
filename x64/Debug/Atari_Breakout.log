@@ -31,7 +31,17 @@ C:\Users\griff\OneDrive\Purdue2023\CGT 215\final_project\Atari_Breakout\Atari_Fu
 C:\Users\griff\OneDrive\Purdue2023\CGT 215\final_project\Atari_Breakout\Atari_Functions.cpp(224,37): warning C4244:         [
 C:\Users\griff\OneDrive\Purdue2023\CGT 215\final_project\Atari_Breakout\Atari_Functions.cpp(224,37): warning C4244:             T=float
 C:\Users\griff\OneDrive\Purdue2023\CGT 215\final_project\Atari_Breakout\Atari_Functions.cpp(224,37): warning C4244:         ]
-C:\Users\griff\OneDrive\Purdue2023\CGT 215\final_project\Atari_Breakout\Atari_Functions.cpp(262,12): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+C:\Users\griff\OneDrive\Purdue2023\CGT 215\final_project\Atari_Breakout\Atari_Functions.cpp(260,12): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+C:\Users\griff\OneDrive\Purdue2023\CGT 215\final_project\Atari_Breakout\Atari_Functions.cpp(359,52): warning C4244: 'argument': conversion from 'T' to 'float', possible loss of data
+C:\Users\griff\OneDrive\Purdue2023\CGT 215\final_project\Atari_Breakout\Atari_Functions.cpp(359,52): warning C4244:         with
+C:\Users\griff\OneDrive\Purdue2023\CGT 215\final_project\Atari_Breakout\Atari_Functions.cpp(359,52): warning C4244:         [
+C:\Users\griff\OneDrive\Purdue2023\CGT 215\final_project\Atari_Breakout\Atari_Functions.cpp(359,52): warning C4244:             T=unsigned int
+C:\Users\griff\OneDrive\Purdue2023\CGT 215\final_project\Atari_Breakout\Atari_Functions.cpp(359,52): warning C4244:         ]
+C:\Users\griff\OneDrive\Purdue2023\CGT 215\final_project\Atari_Breakout\Atari_Functions.cpp(359,34): warning C4244: 'argument': conversion from 'T' to 'float', possible loss of data
+C:\Users\griff\OneDrive\Purdue2023\CGT 215\final_project\Atari_Breakout\Atari_Functions.cpp(359,34): warning C4244:         with
+C:\Users\griff\OneDrive\Purdue2023\CGT 215\final_project\Atari_Breakout\Atari_Functions.cpp(359,34): warning C4244:         [
+C:\Users\griff\OneDrive\Purdue2023\CGT 215\final_project\Atari_Breakout\Atari_Functions.cpp(359,34): warning C4244:             T=unsigned int
+C:\Users\griff\OneDrive\Purdue2023\CGT 215\final_project\Atari_Breakout\Atari_Functions.cpp(359,34): warning C4244:         ]
 C:\Users\griff\OneDrive\Purdue2023\CGT 215\final_project\Atari_Breakout\packages\SFPhysics.2.3.1\build\native\include\SFPhysics\PhysicsShapeList.h(77,29): warning C4267: 'return': conversion from 'size_t' to 'int', possible loss of data
   (compiling source file 'Atari_Functions.cpp')
   C:\Users\griff\OneDrive\Purdue2023\CGT 215\final_project\Atari_Breakout\packages\SFPhysics.2.3.1\build\native\include\SFPhysics\PhysicsShapeList.h(77,29):

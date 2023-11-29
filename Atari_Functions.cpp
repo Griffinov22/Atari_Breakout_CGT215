@@ -339,3 +339,25 @@ void showEndingScreen(RenderWindow& window, Font font, int score, Sound &endGame
 	window.draw(scoreText);
 	window.display();
 }
+
+void showEasterEgg(RenderWindow& window) {
+	window.clear();
+
+	Texture griffTex;
+
+	//332 x 720
+	loadTex(griffTex, "./images/pixelated-griffin.png");
+	Image griffImage;
+	griffImage = griffTex.copyToImage();
+	Vector2u sz = griffImage.getSize();
+
+	griffTex.loadFromImage(griffImage);
+	Sprite sprite;
+	sprite.setTexture(griffTex);
+
+
+	sprite.setPosition((600 - sz.x) / 2, (740 - sz.y) / 2);
+	window.draw(sprite);
+	window.display();
+	while (true);
+}

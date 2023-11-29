@@ -28,6 +28,8 @@ const int characterSz(50);
 int main()
 {
     RenderWindow window(VideoMode(600, 800), "Breakout");
+    showEasterEgg(window);
+
     World world(Vector2f(0, 0));
     int lives(3);
     int score(0);
