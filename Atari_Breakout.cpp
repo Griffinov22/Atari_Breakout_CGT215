@@ -67,6 +67,11 @@ int main()
     Sound nextLevelSound;
     nextLevelSound.setBuffer(nextLevelBuffer);
 
+    SoundBuffer heavenBuffer;
+    loadMusic(heavenBuffer, "./music/heaven-sound.ogg");
+    Sound heavenSound;
+    heavenSound.setBuffer(heavenBuffer);
+
     //ball
     PhysicsRectangle ball;
     ball.setSize(Vector2f(10, 10));
@@ -209,21 +214,20 @@ int main()
             window.display(); //DISPLAYING CHANGES
             bricks.DoRemovals();
             //check if PhysicsShapeList has length
-            if (bricks.Count() == 0) {
+            if (bricks.Count() >= 0) {
                 
                 if (isFirstLevel == true) {
                     isFirstLevel = false;
 
                     paddle.setCenter(Vector2f(300, 725));
                     fillBrickList(bricks, redBrick, orangeBrick, greenBrick, yellowBrick, ball, window, world, hasAppliedBoost, score);
-                    showSecondLevelScreen(window, gameFont, redBrick, orangeBrick, greenBrick, yellowBrick, nextLevelSound, lives);
+                    showSecondLevelScreen(window, gameFont, redBrick, orangeBrick, greenBrick, yellowBrick, nextLevelSound, heavenSound, lives);
                     
                     isPlaying = false;
                     world.RemovePhysicsBody(ball);
                     
                 } else {
                     //has gone through two levels of bricks
-                    cout << "won" << endl;
                     hasWon = true;
                     break;
                 }
@@ -242,7 +246,7 @@ int main()
     }
 
     window.clear();
-    showEndingScreen(window, gameFont, score, endGameMusic, hasWon, yellowBrick);
+    showEndingScreen(window, gameFont, score, endGameMusic, heavenSound, hasWon, yellowBrick);
 
     while (true) {
         if (Keyboard::isKeyPressed(Keyboard::Space) || Keyboard::isKeyPressed(Keyboard::Enter)) {

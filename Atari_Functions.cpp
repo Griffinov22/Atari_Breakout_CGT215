@@ -164,7 +164,7 @@ void fillBrickList(PhysicsShapeList<PhysicsRectangle>& bricks,
 	Color brickColor;
 	for (int j(0); j < 8; j++) {
 		int starterX(5);
-		int starterY(175 + (j * 30));
+		int starterY(170 + (j * 28));
 		switch (j) {
 		case 0:
 		case 1:
@@ -218,9 +218,6 @@ void fillBrickList(PhysicsShapeList<PhysicsRectangle>& bricks,
 					hasAppliedBoost = true;
 
 					bool isPositive = ball.getVelocity().y <= 0;
-					//cout << "x: " << ball.getVelocity().x << endl;
-					//cout << "y: " << ball.getVelocity().y << endl;
-					cout << (isPositive ? -0.12 : 0.12) << endl;
 					ball.applyImpulse(Vector2f(0, (isPositive ? -0.12 : 0.12)));
 				}
 
@@ -239,8 +236,9 @@ bool isSameColor(Color first, Color second) {
 	return true;
 }
 
-void showEasterEgg(RenderWindow& window, Font font, int &lives) {
+void showEasterEgg(RenderWindow& window, Font font, int &lives, Sound &heavenSound) {
 	//Gotta have a good ole' easter egg
+	heavenSound.play();
 	lives++;
 
 	Texture griffTex;
@@ -270,7 +268,6 @@ void showEasterEgg(RenderWindow& window, Font font, int &lives) {
 	Clock clock;
 	Time lastTime(clock.getElapsedTime());
 	int hiddenHeight(sz.y - 50);
-
 
 	while (true) {
 		Time currentTime(clock.getElapsedTime());
@@ -322,7 +319,7 @@ void showEasterEgg(RenderWindow& window, Font font, int &lives) {
 	}
 }
 
-void showSecondLevelScreen(RenderWindow &window, Font font, Color redBrick, Color orangeBrick, Color greenBrick, Color yellowBrick, Sound &nextLevelSound, int &lives) {
+void showSecondLevelScreen(RenderWindow &window, Font font, Color redBrick, Color orangeBrick, Color greenBrick, Color yellowBrick, Sound &nextLevelSound, Sound &heavenSound, int &lives) {
 
 	nextLevelSound.play();
 	
@@ -369,7 +366,8 @@ void showSecondLevelScreen(RenderWindow &window, Font font, Color redBrick, Colo
 		}
 		//if holding shift+G => produce easter egg
 		if ((Keyboard::isKeyPressed(Keyboard::LShift) || Keyboard::isKeyPressed(Keyboard::LShift)) && Keyboard::isKeyPressed(Keyboard::G)) {
-			showEasterEgg(window, font, lives);
+			nextLevelSound.stop();
+			showEasterEgg(window, font, lives, heavenSound);
 			numOfChanges = 0; //restarts 2nd level screen
 		}
 
@@ -380,18 +378,19 @@ void showSecondLevelScreen(RenderWindow &window, Font font, Color redBrick, Colo
 	}
 }
 
-void showEndingScreen(RenderWindow& window, Font font, int score, Sound &endGameMusic, bool hasWon, Color yellowBrick) {
+void showEndingScreen(RenderWindow& window, Font font, int score, Sound &endGameMusic, Sound &heavenSound, bool hasWon, Color yellowBrick) {
 	//play music
-	endGameMusic.play();
 
 	RectangleShape backboard;
 	backboard.setSize(Vector2f(400, 200));
 	backboard.setPosition(Vector2f(100, 300));
 	if (hasWon) {
 		backboard.setFillColor(yellowBrick);
+		heavenSound.play();
 	}
 	else {
 		backboard.setFillColor(Color(34, 32, 246));
+		endGameMusic.play();
 	}
 
 	Text gameOverText;
