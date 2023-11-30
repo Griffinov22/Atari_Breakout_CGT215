@@ -28,7 +28,6 @@ const int characterSz(50);
 int main()
 {
     RenderWindow window(VideoMode(600, 800), "Breakout");
-    showEasterEgg(window);
 
     World world(Vector2f(0, 0));
     int lives(3);
@@ -39,6 +38,8 @@ int main()
     bool hasWon(false);
     bool isFirstLevel(true);
     srand(time(0));
+    Font gameFont;
+    gameFont.loadFromFile("Rubic.ttf");
 
     //music
     SoundBuffer countDownBuff;
@@ -150,8 +151,6 @@ int main()
     //12 bricks here
     fillBrickList(bricks, redBrick, orangeBrick, greenBrick, yellowBrick, ball, window, world, hasAppliedBoost, score);
     
-    Font gameFont;
-    gameFont.loadFromFile("Rubic.ttf");
     
     Text livesText;
     livesText.setFont(gameFont);
@@ -217,7 +216,7 @@ int main()
 
                     paddle.setCenter(Vector2f(300, 725));
                     fillBrickList(bricks, redBrick, orangeBrick, greenBrick, yellowBrick, ball, window, world, hasAppliedBoost, score);
-                    showSecondLevelScreen(window, gameFont, redBrick, orangeBrick, greenBrick, yellowBrick, nextLevelSound);
+                    showSecondLevelScreen(window, gameFont, redBrick, orangeBrick, greenBrick, yellowBrick, nextLevelSound, lives);
                     
                     isPlaying = false;
                     world.RemovePhysicsBody(ball);

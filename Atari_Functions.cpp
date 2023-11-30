@@ -162,7 +162,7 @@ void fillBrickList(PhysicsShapeList<PhysicsRectangle>& bricks,
 
 	//should be 8 rows in production
 	Color brickColor;
-	for (int j(0); j < 1; j++) {
+	for (int j(0); j < 8; j++) {
 		int starterX(5);
 		int starterY(175 + (j * 30));
 		switch (j) {
@@ -220,8 +220,8 @@ void fillBrickList(PhysicsShapeList<PhysicsRectangle>& bricks,
 					bool isPositive = ball.getVelocity().y <= 0;
 					//cout << "x: " << ball.getVelocity().x << endl;
 					//cout << "y: " << ball.getVelocity().y << endl;
-					cout << (isPositive ? -0.08 : 0.08) << endl;
-					ball.applyImpulse(Vector2f(0, (isPositive ? -0.08 : 0.08)));
+					cout << (isPositive ? -0.12 : 0.12) << endl;
+					ball.applyImpulse(Vector2f(0, (isPositive ? -0.12 : 0.12)));
 				}
 
 				};
@@ -239,7 +239,90 @@ bool isSameColor(Color first, Color second) {
 	return true;
 }
 
-void showSecondLevelScreen(RenderWindow &window, Font font, Color redBrick, Color orangeBrick, Color greenBrick, Color yellowBrick, Sound &nextLevelSound) {
+void showEasterEgg(RenderWindow& window, Font font, int &lives) {
+	//Gotta have a good ole' easter egg
+	lives++;
+
+	Texture griffTex;
+	//400 x 650
+	loadTex(griffTex, "./images/pixelated-griffin.png");
+
+	Image griffImage;
+	griffImage = griffTex.copyToImage();
+	Vector2u sz = griffImage.getSize();
+	Sprite sprite;
+	sprite.setPosition(300 - (sz.x / 2), 400 - (sz.y / 2));
+
+	//turn off opacity of image
+	for (int y = 0; y < sz.y; y++) {
+		for (int x = 0; x < sz.x; x++) {
+			Color c = griffImage.getPixel(x, y);
+				griffImage.setPixel(x, y, Color(c.r, c.g, c.b, 0));
+		}
+	}
+
+	Text griffText;
+	griffText.setFont(font);
+	griffText.setString("GRIFFIN");
+	FloatRect txtSz = griffText.getGlobalBounds();
+	griffText.setPosition(Vector2f(300 - (txtSz.width / 2), 700 - (txtSz.height / 2)));
+
+	Clock clock;
+	Time lastTime(clock.getElapsedTime());
+	int hiddenHeight(sz.y - 50);
+
+
+	while (true) {
+		Time currentTime(clock.getElapsedTime());
+		int ellapsedMS((currentTime - lastTime).asMilliseconds());
+
+		if (ellapsedMS >= 500) {
+			hiddenHeight -= 50;
+			if (hiddenHeight < 0) {
+				wait(3);
+				break;
+			}
+			//moving text position after 2 rounds
+			if (hiddenHeight <= 500) {
+				Vector2f pos = griffText.getPosition();
+				if (hiddenHeight == 500) {
+					griffText.setPosition(100, pos.y);
+				}
+				else if (hiddenHeight == 0) {
+					FloatRect gb = griffText.getGlobalBounds();
+					griffText.setPosition(Vector2f(300 - (gb.width / 2), 700 - (gb.height / 2)));
+				}
+				else {
+					float w = griffText.getGlobalBounds().width;
+					griffText.setPosition(pos.x == 100 ? (500 - w) : 100, pos.y);
+				}
+			}
+
+			lastTime = currentTime;
+			window.clear();
+
+			for (int y = hiddenHeight; y < hiddenHeight + 50; y++) {
+				for (int x = 0; x < sz.x; x++) {
+					Color c = griffImage.getPixel(x, y);
+					griffImage.setPixel(x, y, Color(c.r, c.g, c.b, 255));
+
+				}
+			}
+			griffTex.loadFromImage(griffImage);
+
+			sprite.setTexture(griffTex);
+
+
+			window.draw(sprite);
+			window.draw(griffText);
+			window.display();
+
+		}
+
+	}
+}
+
+void showSecondLevelScreen(RenderWindow &window, Font font, Color redBrick, Color orangeBrick, Color greenBrick, Color yellowBrick, Sound &nextLevelSound, int &lives) {
 
 	nextLevelSound.play();
 	
@@ -284,6 +367,11 @@ void showSecondLevelScreen(RenderWindow &window, Font font, Color redBrick, Colo
 			oldColor = newColor;
 			lastTime = currentTime;
 		}
+		//if holding shift+G => produce easter egg
+		if ((Keyboard::isKeyPressed(Keyboard::LShift) || Keyboard::isKeyPressed(Keyboard::LShift)) && Keyboard::isKeyPressed(Keyboard::G)) {
+			showEasterEgg(window, font, lives);
+			numOfChanges = 0; //restarts 2nd level screen
+		}
 
 		window.clear();
 		window.draw(backboard);
@@ -291,7 +379,6 @@ void showSecondLevelScreen(RenderWindow &window, Font font, Color redBrick, Colo
 		window.display();
 	}
 }
-
 
 void showEndingScreen(RenderWindow& window, Font font, int score, Sound &endGameMusic, bool hasWon, Color yellowBrick) {
 	//play music
@@ -338,26 +425,4 @@ void showEndingScreen(RenderWindow& window, Font font, int score, Sound &endGame
 	window.draw(ysText);
 	window.draw(scoreText);
 	window.display();
-}
-
-void showEasterEgg(RenderWindow& window) {
-	window.clear();
-
-	Texture griffTex;
-
-	//332 x 720
-	loadTex(griffTex, "./images/pixelated-griffin.png");
-	Image griffImage;
-	griffImage = griffTex.copyToImage();
-	Vector2u sz = griffImage.getSize();
-
-	griffTex.loadFromImage(griffImage);
-	Sprite sprite;
-	sprite.setTexture(griffTex);
-
-
-	sprite.setPosition((600 - sz.x) / 2, (740 - sz.y) / 2);
-	window.draw(sprite);
-	window.display();
-	while (true);
 }

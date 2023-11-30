@@ -28,9 +28,11 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <None Include="music\ballFail.ogg" />
+    <None Include="music\completeLevel.ogg" />
+    <None Include="music\countDown.ogg" />
+    <None Include="music\endGame.ogg" />
+    <None Include="music\plink.ogg" />
     <None Include="packages.config" />
-    <None Include="..\..\..\..\..\Desktop\Atari_Breakout_CGT215\countDown.ogg">
-      <Filter>Source Files</Filter>
-    </None>
   </ItemGroup>
 </Project>

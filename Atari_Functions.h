@@ -35,8 +35,8 @@ void fillBrickList(PhysicsShapeList<PhysicsRectangle> &bricks,
 	PhysicsRectangle &ball, RenderWindow &window, World &world, 
 	bool &hasAppliedBoost, int &score);
 
-void showSecondLevelScreen(RenderWindow &window, Font font, Color redBrick, Color orangeBrick, Color greenBrick, Color yellowBrick, Sound &nextLevelSound);
+void showEasterEgg(RenderWindow &window, Font font, int &lives);
+
+void showSecondLevelScreen(RenderWindow &window, Font font, Color redBrick, Color orangeBrick, Color greenBrick, Color yellowBrick, Sound &nextLevelSound, int &lives);
 
 void showEndingScreen(RenderWindow &window, Font font, int score, Sound &endGameMusic, bool hasWon, Color yellowBrick);
-
-void showEasterEgg(RenderWindow &window);
