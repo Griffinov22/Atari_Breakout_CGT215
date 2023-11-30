@@ -238,7 +238,6 @@ bool isSameColor(Color first, Color second) {
 
 void showEasterEgg(RenderWindow& window, Font font, int &lives, Sound &heavenSound) {
 	//Gotta have a good ole' easter egg
-	heavenSound.play();
 	lives++;
 
 	Texture griffTex;
@@ -284,12 +283,16 @@ void showEasterEgg(RenderWindow& window, Font font, int &lives, Sound &heavenSou
 				Vector2f pos = griffText.getPosition();
 				if (hiddenHeight == 500) {
 					griffText.setPosition(100, pos.y);
+					//only start playing sound till 2nd round
+					heavenSound.play();
+					
 				}
 				else if (hiddenHeight == 0) {
 					FloatRect gb = griffText.getGlobalBounds();
 					griffText.setPosition(Vector2f(300 - (gb.width / 2), 700 - (gb.height / 2)));
 				}
 				else {
+
 					float w = griffText.getGlobalBounds().width;
 					griffText.setPosition(pos.x == 100 ? (500 - w) : 100, pos.y);
 				}

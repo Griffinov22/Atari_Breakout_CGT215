@@ -214,7 +214,7 @@ int main()
             window.display(); //DISPLAYING CHANGES
             bricks.DoRemovals();
             //check if PhysicsShapeList has length
-            if (bricks.Count() >= 0) {
+            if (bricks.Count() == 0) {
                 
                 if (isFirstLevel == true) {
                     isFirstLevel = false;
